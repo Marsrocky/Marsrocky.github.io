@@ -1,0 +1,19 @@
+---
+layout:     post
+title:      "The Blog Bang"
+subtitle:   "Share all my life"
+date:       2014-11-21 19:00
+author:     "Jianfei"
+header-img: "img/post-bg-01.jpg"
+---
+
+<h2 class="section-heading">博客爆炸</h2>
+
+<blockquote>就像宇宙和生活大爆炸一样，终于迎来了Marsrocky的博客大爆炸。</blockquote>
+
+<h2 class="section-heading">只为记录</h2>
+
+<a href="#">
+    <img class="img-responsive" src="{{ site.baseurl }}/img/post-sample-image.jpg" alt="">
+</a>
+<span class="caption text-muted">记录生活，家人，朋友，和一切正能量。</span>

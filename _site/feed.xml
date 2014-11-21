@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marsrocky</title>
+    <description>Jianfei from Mars</description>
+    <link>http://Marsrocky.github.io/startbootstrap-clean-blog-jekyll/</link>
+    <atom:link href="http://Marsrocky.github.io/startbootstrap-clean-blog-jekyll/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 21 Nov 2014 20:24:25 +0800</pubDate>
+    <lastBuildDate>Fri, 21 Nov 2014 20:24:25 +0800</lastBuildDate>
+    <generator>Jekyll v2.5.1</generator>
+    
+      <item>
+        <title>The Blog Bang</title>
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;博客爆炸&lt;/h2&gt;
+
+&lt;blockquote&gt;就像宇宙和生活大爆炸一样，终于迎来了Marsrocky的博客大爆炸。&lt;/blockquote&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;只为记录&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/startbootstrap-clean-blog-jekyll/img/post-sample-image.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;记录生活，家人，朋友，和一切正能量。&lt;/span&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 21 Nov 2014 19:00:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/startbootstrap-clean-blog-jekyll/2014/11/21/Blog%20bang/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/startbootstrap-clean-blog-jekyll/2014/11/21/Blog%20bang/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

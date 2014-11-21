@@ -1,0 +1,17 @@
+# Site settings
+title: Marsrocky
+email: jianfei_mars@hotmail.com
+description: "Jianfei from Mars"
+baseurl: "/startbootstrap-clean-blog-jekyll"
+url: "http://Marsrocky.github.io"
+twitter_username: Marsrocky
+github_username:  Marsrocky
+facebook_username:  jianfei.yang.526
+renren_username: 263506266
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 5
+exclude: ["node_modules"]
