@@ -5,6 +5,8 @@ subtitle:   "Share all my life"
 date:       2014-11-21 19:00
 author:     "Jianfei"
 header-img: "img/post-bg-01.jpg"
+tags:        [start, lucky]
+category:   Life
 ---
 
 <h2 class="section-heading">博客爆炸</h2>
