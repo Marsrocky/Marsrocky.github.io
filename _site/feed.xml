@@ -79,6 +79,10 @@
                     
                 </li>
                 
+                <li>
+                    <a href="/statistics/">Recommend</a>
+                </li>
+                
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -94,8 +98,8 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 22 Nov 2014 16:32:00 +0800</pubDate>
-    <lastBuildDate>Sat, 22 Nov 2014 16:32:00 +0800</lastBuildDate>
+    <pubDate>Sun, 23 Nov 2014 17:34:07 +0800</pubDate>
+    <lastBuildDate>Sun, 23 Nov 2014 17:34:07 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
     
       <item>
@@ -183,14 +187,26 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <ul class="list-inline text-center">
+                    
                     <li>
-                        <a href="/feed.xml">
+                        <a href="http://www.renren.com/263506266/profile">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                                <i class="fa fa-renren fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
                     </li>
+                    
+                    
+                    <li>
+                        <a href="http://weibo.com/2805657695">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
                     
                     <li>
                         <a href="https://twitter.com/Marsrocky">
