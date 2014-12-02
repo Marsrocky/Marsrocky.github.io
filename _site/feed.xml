@@ -98,9 +98,29 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 27 Nov 2014 13:11:08 +0800</pubDate>
-    <lastBuildDate>Thu, 27 Nov 2014 13:11:08 +0800</lastBuildDate>
+    <pubDate>Tue, 02 Dec 2014 13:43:08 +0800</pubDate>
+    <lastBuildDate>Tue, 02 Dec 2014 13:43:08 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
+    
+      <item>
+        <title>Zhuhai Campus Map</title>
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;珠海校区全景&lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用无人机的全景拍摄，从而制作我校区的全景地图，推荐点击下面的放大按钮，全屏感受，满满的爱意。&lt;/p&gt;
+
+&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;250px&quot; width=&quot;100%&quot; src=&quot;http://120.24.71.152/wp-content/themes/twentytwelve/SYSU_ZhuhaiCampus.html&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Mon, 01 Dec 2014 01:40:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/dji/2014/12/01/Zhuhai%20Campus%20Map/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/dji/2014/12/01/Zhuhai%20Campus%20Map/</guid>
+        
+        <category>DJI</category>
+        
+        <category>Map</category>
+        
+        
+        <category>dji</category>
+        
+      </item>
     
       <item>
         <title>飞行器项目开启</title>
