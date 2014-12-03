@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jianfei from Mars">
 
-    <title>Marsrocky</title>
+    <title>Marsrock</title>
 
     <link rel="canonical" href="http://Marsrocky.github.io/feed.xml">
 
@@ -81,7 +81,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Marsrocky</a>
+            <a class="navbar-brand" href="/">Marsrock</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -126,12 +126,12 @@
     <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Marsrocky</title>
+    <title>Marsrock</title>
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Dec 2014 01:29:57 +0800</pubDate>
-    <lastBuildDate>Wed, 03 Dec 2014 01:29:57 +0800</lastBuildDate>
+    <pubDate>Wed, 03 Dec 2014 23:11:18 +0800</pubDate>
+    <lastBuildDate>Wed, 03 Dec 2014 23:11:18 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
     
       <item>
@@ -290,7 +290,7 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrocky 2014</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2014</p>
             </div>
         </div>
     </div>
