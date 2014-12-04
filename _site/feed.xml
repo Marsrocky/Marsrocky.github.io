@@ -33,6 +33,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!--Load ICON-->
+    <link rel="icon" href="/img/autobot.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/autobot.ico" type="image/x-icon" />
+
     <!--Load Mathjax-->
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script>
@@ -130,8 +134,8 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 Dec 2014 23:11:18 +0800</pubDate>
-    <lastBuildDate>Wed, 03 Dec 2014 23:11:18 +0800</lastBuildDate>
+    <pubDate>Thu, 04 Dec 2014 15:27:50 +0800</pubDate>
+    <lastBuildDate>Thu, 04 Dec 2014 15:27:50 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
     
       <item>
