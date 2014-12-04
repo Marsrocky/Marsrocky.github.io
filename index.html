@@ -4,15 +4,6 @@ description: "生命不息，战斗不止！"
 header-img: "img/f5.jpg"
 ---
 
-<!-- Autobot Icon -->
-<style>
-#nav { width:150px; height: 150px; border: 0px; position:fixed;right:0;top:9% }
-</style>
-<div id="nav">
-<img src="{{ site.baseurl }}/img/autobot.png" width="150px" height="150px">
-</div>
-<!-- End Autobot-->
-
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
