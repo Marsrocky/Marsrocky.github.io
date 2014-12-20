@@ -72,10 +72,10 @@
 
     <!-- Autobot Icon Window -->
     <style>
-    #nav { width:150px; height: 150px; border: 0px; position:fixed;right:0;top:9% }
+    #nav { width:150px; height: 150px; border: 0px; position:fixed;right:0;top:9%; z-index:100;}
     </style>
     <div id="nav">
-    <img src="/img/autobot.png" width="150px" height="150px">
+    <img src="/img/autobot.png" width="100%" height="100%">
     </div>
     <!-- End Autobot-->
 </head>
@@ -143,16 +143,42 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 04 Dec 2014 15:50:56 +0800</pubDate>
-    <lastBuildDate>Thu, 04 Dec 2014 15:50:56 +0800</lastBuildDate>
+    <pubDate>Sun, 21 Dec 2014 05:29:55 +0800</pubDate>
+    <lastBuildDate>Sun, 21 Dec 2014 05:29:55 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
+    
+      <item>
+        <title>3D Earth to Show statistics</title>
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;3D 地球&lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前段时间去上海参加hackathon的时候还听周神和策神跟我说数据可视化，是大数据时代一个热点。这次我在查询高德地图API时发现了一张“&lt;a href=&quot;http://lbs.amap.com/gps/&quot;&gt;全球定位热力图&lt;/a&gt;”，十分酷炫，是根据各地区的地图api访问次数而生成的地图图像！看了下其引用库，是最基础的JS下的3D库THREE.js，而对于global的数据分布则可以直接使用WebGL Global，开源的搭建好的地球视图，只需要提供json格式的经纬度数据，就可以描绘出美轮美奂的定制版数字地球啦！&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;另外，3D的编程现在不仅局限于openGL了，前段时间有使用过vpython，也是非常好的3D工具，这里也粗略的学习了一下一个3D场景的基本元素。其中包括场景、渲染器、相机、物体、光源，在编程中会慢慢体会到这些元素的实际设定。&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;闲话不多说了，看下面的demo，全球人口信息在3年中的变化。&lt;/p&gt;
+
+&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;600px&quot; width=&quot;100%&quot; src=&quot;http://127.0.0.1:4000/globe/&quot;&gt;&lt;/iframe&gt;
+
+</description>
+        <pubDate>Sun, 21 Dec 2014 05:23:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/fore-end/2014/12/21/3D%20Earth%20to%20show%20statistics/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/fore-end/2014/12/21/3D%20Earth%20to%20show%20statistics/</guid>
+        
+        <category>Fore-end</category>
+        
+        <category>Map</category>
+        
+        
+        <category>fore-end</category>
+        
+      </item>
     
       <item>
         <title>Zhuhai Campus Map</title>
         <description>&lt;h2 class=&quot;section-heading&quot;&gt;珠海校区全景&lt;/h2&gt;
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用无人机的全景拍摄，从而制作我校区的全景地图，推荐点击下面的放大按钮，全屏感受，满满的爱意。&lt;/p&gt;
 
-&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;250px&quot; width=&quot;100%&quot; src=&quot;http://120.24.71.152/wp-content/themes/twentytwelve/SYSU_ZhuhaiCampus.html&quot;&gt;&lt;/iframe&gt;
+&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;400px&quot; width=&quot;100%&quot; src=&quot;http://120.24.71.152/wp-content/themes/twentytwelve/SYSU_ZhuhaiCampus.html&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Mon, 01 Dec 2014 01:40:00 +0800</pubDate>
         <link>http://Marsrocky.github.io/dji/2014/12/01/Zhuhai%20Campus%20Map/</link>
@@ -223,7 +249,6 @@
 &lt;blockquote&gt;就像宇宙和生活大爆炸一样，终于迎来了Marsrocky的博客大爆炸。&lt;/blockquote&gt;
 
 &lt;h2 class=&quot;section-heading&quot;&gt;只为记录&lt;/h2&gt;
-
 &lt;p&gt;&lt;a href=&quot;#&quot;&gt;
     &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;/a&gt;
