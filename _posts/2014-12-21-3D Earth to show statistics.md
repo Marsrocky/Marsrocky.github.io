@@ -17,5 +17,5 @@ category:   Fore-end
 <h2 class="section-heading">Demo</h2>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;闲话不多说了，看下面的demo，全球人口信息在3年中的变化。</p>
 
-<iframe frameborder="0" marginheight="0" marginwidth="0" border="0" scrolling="no" height="600px" width="100%" src="http://127.0.0.1:4000/globe/"></iframe>
+<iframe frameborder="0" marginheight="0" marginwidth="0" border="0" scrolling="no" height="600px" width="100%" src="http://marsrock.net/globe/"></iframe>
 
