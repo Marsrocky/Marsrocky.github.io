@@ -5,8 +5,8 @@ subtitle:   "全球大数据可视化显示"
 date:       2014-12-21 5:23
 author:     "Jianfei"
 header-img: "img/gaodelbs.png"
-tags:        [Fore-end, Map]
-category:   Fore-end
+tags:        [Robot]
+category:   Robot
 ---
 
 <h2 class="section-heading">3D 地球</h2>
