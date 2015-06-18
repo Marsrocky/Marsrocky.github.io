@@ -143,9 +143,39 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 04 Feb 2015 17:13:38 +0800</pubDate>
-    <lastBuildDate>Wed, 04 Feb 2015 17:13:38 +0800</lastBuildDate>
+    <pubDate>Thu, 18 Jun 2015 09:31:22 +0800</pubDate>
+    <lastBuildDate>Thu, 18 Jun 2015 09:31:22 +0800</lastBuildDate>
     <generator>Jekyll v2.5.1</generator>
+    
+      <item>
+        <title>Robot Nao Developing Story</title>
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;Hello, Nao! &lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;骏马腾飞春来报，梅花绽放祝福道。转眼已是马年，期间做了些水水的项目，写了些水水的paper，重要的是家人团聚过大年。回来的第一个周，就来参加Nao的机器人创客马拉松。不同于之前参加的Hackathon，这次由于是基于特定机器人Nao开发，所以之前还有一个基础的培训。&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;人形机器人Nao是世界上最先进的人形机器人之一，在培训中，我们学习了其C++/Python的API，并简单的了解了其硬件设施，包括步进电机、传感器和处理设备。其复杂的传感设备和电机都可以通过编写参数来调节，为方便工程师和设计师，ALDEBARAN公司开发Choregraphe图形化编程界面，其语言类似Labview的G语言，由模块连接而成，而每个模块都可以通过修改Python代码改变其基础功能。&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;Match and coding &lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;基于特定的机器人，我们首先考虑了它的用途，基于其大小、形状和API特性，我们设计了一套用于presentation的自动化部署程序，即连接PC和Nao，用户只需要提供ppt和想要演讲的文字，Nao会帮助用户完成自动的展示。机器人的展示脱离了枯燥无味的风格，也不会受到人为因素的影响，其高逼格的特点使得发布会、演示甚至授课轻松有趣。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/Nao.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;Nao and me!&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我们的作品幸运得在最后的评比中夺得一等奖，也是参加Hackathon的第一个名誉性成果，48小时的连续编程实属不易！&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;后续我们的作品在广交会（Canton Fair）中展出，为创锐科技公司的音响设备做了高大上的介绍和发布！&lt;/p&gt;
+</description>
+        <pubDate>Wed, 18 Mar 2015 17:47:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/robot/2015/03/18/Nao%20Robot%20Develop%20Story/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/robot/2015/03/18/Nao%20Robot%20Develop%20Story/</guid>
+        
+        <category>Human-like robot</category>
+        
+        
+        <category>robot</category>
+        
+      </item>
     
       <item>
         <title>3D Earth to Show statistics</title>
@@ -161,15 +191,13 @@
 
 </description>
         <pubDate>Sun, 21 Dec 2014 05:23:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/fore-end/2014/12/21/3D%20Earth%20to%20show%20statistics/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/fore-end/2014/12/21/3D%20Earth%20to%20show%20statistics/</guid>
+        <link>http://Marsrocky.github.io/robot/2014/12/21/3D%20Earth%20to%20show%20statistics/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/robot/2014/12/21/3D%20Earth%20to%20show%20statistics/</guid>
         
-        <category>Fore-end</category>
-        
-        <category>Map</category>
+        <category>Robot</category>
         
         
-        <category>fore-end</category>
+        <category>robot</category>
         
       </item>
     
