@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "飞行器项目开启"
-subtitle:   "DJI based 3D Modeling"
+title:      "DJI based 3D Modeling"
+subtitle:   "飞行器项目开启"
 date:       2014-11-22 14:30
 author:     "Jianfei"
 header-img: "img/post-bg-01.jpg"
