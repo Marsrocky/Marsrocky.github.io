@@ -143,9 +143,9 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Jun 2015 09:31:22 +0800</pubDate>
-    <lastBuildDate>Thu, 18 Jun 2015 09:31:22 +0800</lastBuildDate>
-    <generator>Jekyll v2.5.1</generator>
+    <pubDate>Thu, 22 Sep 2016 22:02:25 +0800</pubDate>
+    <lastBuildDate>Thu, 22 Sep 2016 22:02:25 +0800</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>Robot Nao Developing Story</title>
@@ -167,13 +167,13 @@
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;后续我们的作品在广交会（Canton Fair）中展出，为创锐科技公司的音响设备做了高大上的介绍和发布！&lt;/p&gt;
 </description>
         <pubDate>Wed, 18 Mar 2015 17:47:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/robot/2015/03/18/Nao%20Robot%20Develop%20Story/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/robot/2015/03/18/Nao%20Robot%20Develop%20Story/</guid>
+        <link>http://Marsrocky.github.io/hackathon/2015/03/18/Nao-Robot-Develop-Story/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/hackathon/2015/03/18/Nao-Robot-Develop-Story/</guid>
         
         <category>Human-like robot</category>
         
         
-        <category>robot</category>
+        <category>Hackathon</category>
         
       </item>
     
@@ -187,42 +187,43 @@
 &lt;h2 class=&quot;section-heading&quot;&gt;Demo&lt;/h2&gt;
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;闲话不多说了，看下面的demo，全球人口信息在3年中的变化。&lt;/p&gt;
 
-&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;600px&quot; width=&quot;100%&quot; src=&quot;http://marsrock.net/globe/&quot;&gt;&lt;/iframe&gt;
+&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;600px&quot; width=&quot;100%&quot; src=&quot;https://globe.chromeexperiments.com/&quot;&gt;&lt;/iframe&gt;
 
 </description>
         <pubDate>Sun, 21 Dec 2014 05:23:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/robot/2014/12/21/3D%20Earth%20to%20show%20statistics/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/robot/2014/12/21/3D%20Earth%20to%20show%20statistics/</guid>
+        <link>http://Marsrocky.github.io/visualization/2014/12/21/3D-Earth-to-show-statistics/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/visualization/2014/12/21/3D-Earth-to-show-statistics/</guid>
         
         <category>Robot</category>
         
         
-        <category>robot</category>
+        <category>Visualization</category>
         
       </item>
     
       <item>
-        <title>Zhuhai Campus Map</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;珠海校区全景&lt;/h2&gt;
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用无人机的全景拍摄，从而制作我校区的全景地图，推荐点击下面的放大按钮，全屏感受，满满的爱意。&lt;/p&gt;
+        <title>SYSU Zhuhai Campus Map</title>
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;中大珠海全景&lt;/h2&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用无人机的高空拍摄与全景拼接，制作的中山大学珠海校区的全景地图，点击下面的放大按钮，全屏感受海边小镇的惬意。&lt;/p&gt;
 
 &lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;400px&quot; width=&quot;100%&quot; src=&quot;http://120.24.71.152/wp-content/themes/twentytwelve/SYSU_ZhuhaiCampus.html&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;span class=&quot;caption text-muted&quot;&gt;若海临风皆为客，泌水观星尽是福。&lt;/span&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Dec 2014 01:40:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/dji/2014/12/01/Zhuhai%20Campus%20Map/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/dji/2014/12/01/Zhuhai%20Campus%20Map/</guid>
+        <link>http://Marsrocky.github.io/uav/2014/12/01/Zhuhai-Campus-Map/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/uav/2014/12/01/Zhuhai-Campus-Map/</guid>
         
         <category>DJI</category>
         
         <category>Map</category>
         
         
-        <category>dji</category>
+        <category>UAV</category>
         
       </item>
     
       <item>
-        <title>飞行器项目开启</title>
+        <title>Phantom-based 3D Modeling</title>
         <description>&lt;h2 class=&quot;section-heading&quot;&gt;总体谈谈&lt;/h2&gt;
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;先说说这个项目的前世吧，机缘巧合，学CS的我暑假可以到萌生在HKUST的创业公司DJI实习。DJI，中文名大疆创新，一家旨在做飞行器影像系统的年轻公司，据资料显示第五年的销售额已达80亿，并且拿到了红杉资本的投资，还是非常有前途的公司。我在实习中负责的是一个智能车基于视觉的识别，基本原理什么的都是近乎从零看起，但让我叩响了工程领域计算机视觉的大门，也让我对飞行器和计算机视觉结合的开发充满了兴趣。在开学后经过一段时间的调查和思考，终于有了一点点想法，于是我一鼓作气将这个想法细化为一份Proposal。&lt;/p&gt;
 
@@ -256,8 +257,8 @@
 &lt;span class=&quot;caption text-muted&quot;&gt;好啦，扬帆，启航！&lt;/span&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 22 Nov 2014 14:30:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/android/2014/11/22/DJI%20based%203D%20Modeling/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/android/2014/11/22/DJI%20based%203D%20Modeling/</guid>
+        <link>http://Marsrocky.github.io/uav/2014/11/22/DJI-based-3D-Modeling/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/uav/2014/11/22/DJI-based-3D-Modeling/</guid>
         
         <category>Android</category>
         
@@ -266,32 +267,32 @@
         <category>3D Modeling</category>
         
         
-        <category>android</category>
+        <category>UAV</category>
         
       </item>
     
       <item>
         <title>The Blog Bang</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;博客爆炸&lt;/h2&gt;
+        <description>&lt;h2 class=&quot;section-heading&quot;&gt;起源&lt;/h2&gt;
 
-&lt;blockquote&gt;就像宇宙和生活大爆炸一样，终于迎来了Marsrocky的博客大爆炸。&lt;/blockquote&gt;
+&lt;blockquote&gt;就像宇宙和生活大爆炸一样，这里始于人生中一个质点的爆炸，自此我决定在这里书写我与我的一切。&lt;/blockquote&gt;
 
-&lt;h2 class=&quot;section-heading&quot;&gt;只为记录&lt;/h2&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;分享阳光，分担风雨&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;#&quot;&gt;
     &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;/a&gt;
 &lt;span class=&quot;caption text-muted&quot;&gt;记录生活，家人，朋友，和一切正能量。&lt;/span&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 21 Nov 2014 19:00:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/life/2014/11/21/Blog%20bang/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/life/2014/11/21/Blog%20bang/</guid>
+        <link>http://Marsrocky.github.io/life/2014/11/21/Blog-bang/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/life/2014/11/21/Blog-bang/</guid>
         
         <category>start</category>
         
         <category>lucky</category>
         
         
-        <category>life</category>
+        <category>Life</category>
         
       </item>
     
@@ -356,7 +357,7 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2015</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2016</p>
             </div>
         </div>
     </div>

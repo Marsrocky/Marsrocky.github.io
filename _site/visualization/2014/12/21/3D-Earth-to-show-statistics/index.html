@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jianfei from Mars">
 
-    <title>Recommend - Marsrock</title>
+    <title>3D Earth to Show statistics - Marsrock</title>
 
-    <link rel="canonical" href="http://Marsrocky.github.io/recommend/">
+    <link rel="canonical" href="http://Marsrocky.github.io/visualization/2014/12/21/3D-Earth-to-show-statistics/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -136,38 +136,75 @@
 </nav>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/f7.jpg')">
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/gaodelbs.png')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Recommend</h1>
-                    <hr class="small">
-                    <span class="subheading">What`s in my eyes?</span>
+                <div class="post-heading">
+                    <h1>3D Earth to Show statistics</h1>
+                    
+                    <h2 class="subheading">全球大数据可视化显示</h2>
+                    
+                    <span class="meta">Posted by Jianfei on December 21, 2014</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="799" height="521" id="passing" >
-    <param name="movie" value="http://www.douban.com/doushow/45230559/collection_favorite_drama|movie|book|music_18_6_medium_logo_self/doushow.swf" />
-    <param name="quality" value="high" />
-    <param name="scale" value="noscale"/>
-    <param name="align" value="tl"/>
-    <param name="wmode" value="transparent"/>
-    <embed src="http://www.douban.com/doushow/45230559/collection_favorite_drama|movie|book|music_18_6_medium_logo_self/doushow.swf" wmode="transparent" quality="high"  width="799" height="521" name="passing" scale="noscale" align="tl" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-  </object>
-		</div>
-	</div>
-</div>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-<hr>
+				<h2 class="section-heading">3D 地球</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前段时间去上海参加hackathon的时候还听周神和策神跟我说数据可视化，是大数据时代一个热点。这次我在查询高德地图API时发现了一张“<a href="http://lbs.amap.com/gps/">全球定位热力图</a>”，十分酷炫，是根据各地区的地图api访问次数而生成的地图图像！看了下其引用库，是最基础的JS下的3D库THREE.js，而对于global的数据分布则可以直接使用WebGL Global，开源的搭建好的地球视图，只需要提供json格式的经纬度数据，就可以描绘出美轮美奂的定制版数字地球啦！</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外，3D的编程现在不仅局限于openGL了，前段时间有使用过vpython，也是非常好的3D工具，这里也粗略的学习了一下一个3D场景的基本元素。其中包括场景、渲染器、相机、物体、光源，在编程中会慢慢体会到这些元素的实际设定。</p>
+
+<h2 class="section-heading">Demo</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;闲话不多说了，看下面的demo，全球人口信息在3年中的变化。</p>
+
+<iframe frameborder="0" marginheight="0" marginwidth="0" border="0" scrolling="no" height="600px" width="100%" src="https://globe.chromeexperiments.com/"></iframe>
+
+
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="http://Marsrocky.github.io//uav/2014/12/01/Zhuhai-Campus-Map/" data-toggle="tooltip" data-placement="top" title="SYSU Zhuhai Campus Map">&larr; Previous Post</a> 
+                    </li>
+                     
+                    
+                    <li class="next">
+                        <a href="http://Marsrocky.github.io//hackathon/2015/03/18/Nao-Robot-Develop-Story/" data-toggle="tooltip" data-placement="top" title="Robot Nao Developing Story">Next Post &rarr;</a>
+                    </li>
+                     
+                </ul>
+            <hr>
+            <!-- 多说评论框 start -->
+            <div class="ds-thread" data-thread-key="/visualization/2014/12/21/3D Earth to show statistics" data-title="3D Earth to Show statistics" data-url="/visualization/2014/12/21/3D-Earth-to-show-statistics/"></div>
+            <!-- 多说评论框 end -->
+            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+            <script type="text/javascript">
+            var duoshuoQuery = {short_name:"marsrocky"};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0] 
+                 || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+            </script>
+            <!-- 多说公共JS代码 end -->
+            </div>
+        </div>
+    </div>
+</article>
 
     <!-- Footer -->
 <footer>
