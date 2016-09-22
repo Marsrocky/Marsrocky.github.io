@@ -128,6 +128,10 @@
                     <a href="/recommend/">Recommend</a>
                 </li>
                 
+                <li>
+                    
+                </li>
+                
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -143,9 +147,33 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 22 Sep 2016 22:02:25 +0800</pubDate>
-    <lastBuildDate>Thu, 22 Sep 2016 22:02:25 +0800</lastBuildDate>
+    <pubDate>Thu, 22 Sep 2016 22:46:47 +0800</pubDate>
+    <lastBuildDate>Thu, 22 Sep 2016 22:46:47 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>My travel through hackathons</title>
+        <description>&lt;p&gt;夜深了，我坐在宿舍的电脑旁，疲倦的敲完今天的最后一行代码，准备关机上床睡觉。还处在大三的我对Opencv充满了兴趣，还在自己研究这个新奇又实用的库。突然，“叮——”一声，邮箱来了一封邮件，“中国最大的黑客马拉松——HackShanghai”，黑客马拉松是什么，是黑客们的集会吗？我重新打开浏览器，决定探个明白。&lt;/p&gt;
+
+&lt;p&gt;“黑客马拉松概念源自美国，随着智能手机风行，黑客马拉松逐渐成为插件开发的主要形式：一群高手云集一堂，几十个小时里开发出一款插件，累了或坐或卧，现场休息，做完当场交作品，是世界上最酷的开发者狂欢。”百科上是这样解释的。在我看来，黑客松就是极客们的Party，在这里用短短的一两天进行头脑风暴，用自己的想法和技术改进生活甚至改变世界。看到这里，好奇心与兴趣充满了我的内心，我一扫倦意，想看看国外的hackathons上开发者和设计者们做出了什么样的杰作。&lt;/p&gt;
+
+&lt;p&gt;世界上最大的黑客松是宾夕法尼亚大学的PennApps，现场提供了一些最新的智能硬件，全美感兴趣、会编程的学生皆可以参加，他们三五个人组队，在几十个小时里完成了自己有关健康、科技、经济和游戏等想法的项目，有的用Web展现，有的做成App，还有的做出了可以应用的硬件。
+&lt;/p&gt;
+
+&lt;p&gt;面对这样有趣而又富有技术气息的别开生面的开发者集会，我迫不及待地写了application给HackShanghai，并成功的得到了参赛机会还有机票报销。就这样，我踏上了第一次黑客马拉松的旅途。&lt;/p&gt;
+
+&lt;p&gt;哈哈&lt;/p&gt;
+</description>
+        <pubDate>Thu, 22 Sep 2016 22:11:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/hackathon/2016/09/22/My-travel-through-hackthons/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/hackathon/2016/09/22/My-travel-through-hackthons/</guid>
+        
+        <category>Hackathons</category>
+        
+        
+        <category>hackathon</category>
+        
+      </item>
     
       <item>
         <title>Robot Nao Developing Story</title>
