@@ -13,7 +13,8 @@ douban_username: bzyjf@126.com
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+rouge: pygments
 permalink: pretty
 paginate: 5
 exclude: ["node_modules"]
+gems: [jekyll-paginate]
