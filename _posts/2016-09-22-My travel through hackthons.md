@@ -6,7 +6,7 @@ date:       2016-9-22 22:11
 author:     "Jianfei"
 header-img: "img/hackathon.jpg"
 tags:        [Hackathons]
-category:   hackathon
+category:   Hackathon
 ---
 
 <p>夜深了，我坐在宿舍的电脑旁，疲倦的敲完今天的最后一行代码，准备关机上床睡觉。还处在大三的我对Opencv充满了兴趣，还在自己研究这个新奇又实用的库。突然，“叮——”一声，邮箱来了一封邮件，“中国最大的黑客马拉松——HackShanghai”，黑客马拉松是什么，是黑客们的集会吗？我重新打开浏览器，决定探个明白。</p>
