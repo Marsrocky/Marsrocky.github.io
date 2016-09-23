@@ -108,7 +108,7 @@ Hack NTU是我所见过最大的黑客马拉松，有来自世界各地的1000�
 紧张的编程阶段结束后，即将迎来的是demo展示会，我们队队员为了准备好demo不出bug甚至没有去吃午饭。demo展示中每个队伍一个展板一张桌子，来自微软的员工和外界媒体评审来一一参观，在此期间我还惊喜地遇到了去年在台湾大学参加HackNTU认识的廖教授，原来这次的外卡题就是廖老亲自出的题目。demo展示环节中，我们也走访参观了其它队伍的作品，来自北大、北邮、上交、复旦等各大学校的选手都尝试用不同的解决办法进行技术攻坚，遇到难题时相互启发找到了突破方案。而来自台湾大学的创意赛选手则非常擅于展示和表达，也给人留下深刻的印象；来自江南大学的创意赛选手在短时间内理解了作品别后的算法并做了清晰地阐述和表达，让人佩服……  
 
 <a href="#">
-    <img class="img-responsive" src="http://ww1.sinaimg.cn/large/a73af05fgw1f47ypparobj20zk0qok11.jpg" alt="">
+    <img class="img-responsive" src="http://ww1.sinaimg.cn/large/a73af05fgw1f47ypparobj20zk0qok11.jpg" alt="" width="50%">
 </a>
 <span class="caption text-muted">团队合影!</span>
 
