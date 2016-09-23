@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jianfei from Mars">
+
+    <title>Linear Classification - Marsrock</title>
+
+    <link rel="canonical" href="http://Marsrocky.github.io/course/2016/09/23/Linear-Classification/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/italic1.css" rel='stylesheet' type='text/css'>
+    <link href="/css/italic2.css" rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--Load ICON-->
+    <link rel="icon" href="/img/autobot.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/autobot.ico" type="image/x-icon" />
+
+    <!--Load Mathjax-->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script>
+    MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+        jax: ["input/TeX"],
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: false
+        },
+        TeX: {
+            TagSide: "right",
+            TagIndent: ".8em",
+            MultLineWidth: "85%",
+            equationNumbers: {
+               autoNumber: "AMS",
+            },
+            unicode: {
+               fonts: "STIXGeneral,'Arial Unicode MS'" 
+            }
+        },
+        showProcessingMessages: false
+    });
+    </script>
+
+    <!-- highlight the code-->
+    <link rel="stylesheet" href="/css/default.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- Autobot Icon Window -->
+    <style>
+    #nav { width:150px; height: 150px; border: 0px; position:fixed;right:0;top:9%; z-index:100;}
+    </style>
+    <div id="nav">
+    <img src="/img/autobot.png" width="100%" height="100%">
+    </div>
+    <!-- End Autobot-->
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Marsrock</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">About</a>
+                </li>
+                
+                <li>
+                    <a href="/category/">Categories</a>
+                </li>
+                
+                <li>
+                    <a href="/contact/">Contact</a>
+                </li>
+                
+                <li>
+                    
+                </li>
+                
+                <li>
+                    
+                </li>
+                
+                <li>
+                    <a href="/recommend/">Recommend</a>
+                </li>
+                
+                <li>
+                    
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/post-bg-lc.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Linear Classification</h1>
+                    
+                    <h2 class="subheading">线性分类笔记</h2>
+                    
+                    <span class="meta">Posted by Jianfei on September 23, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>测试</p>
+
+<p>测试mathjax$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="kn">from</span> <span class="nn">dbspider.items</span> <span class="kn">import</span> <span class="n">DbspiderItem</span>
+<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">HtmlResponse</span>
+<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">Request</span>
+
+<span class="k">class</span> <span class="nc">DbSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">spiders</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"dbmovie"</span>
+	<span class="n">allow_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">"douban.com"</span><span class="p">]</span>
+	<span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+		<span class="s">"https://movie.douban.com/subject/20438962/comments"</span>
+	<span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+		<span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">'Url crawled: </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+		<span class="n">item</span> <span class="o">=</span> <span class="n">DbspiderItem</span><span class="p">()</span>
+		
+		<span class="c"># Grade of movie</span>
+		<span class="n">item</span><span class="p">[</span><span class="s">'grade'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-info"]/span[contains(@class, "allstar")]/@title'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+		<span class="c"># Time of comment</span>
+		<span class="n">item</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-info"]/span[@class=""]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+		<span class="c"># Approval of comment</span>
+		<span class="n">item</span><span class="p">[</span><span class="s">'approval'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-vote"]/span[contains(@class, "votes")]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+		<span class="c"># Comment of movie</span>
+		<span class="n">item</span><span class="p">[</span><span class="s">'comment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/p[@class=""]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data_result.txt'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+				<span class="c"># f.write('num: %s\n' % str(i+1))</span>
+				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'time: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'time'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'approval: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'approval'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'comment: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'comment'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+
+				<span class="c"># Due to the possible lost data, we don`t use this data</span>
+				<span class="c"># f.write('grade: %s\n' % item['grade'][i].encode('utf-8'))		</span>
+
+				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+			<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+		<span class="k">yield</span> <span class="n">item</span>
+
+		<span class="n">next_page</span> <span class="o">=</span> <span class="s">'//div[@id="paginator"]/a[@class="next"]/@href'</span>
+		<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">next_page</span><span class="p">):</span>
+			<span class="n">next_url</span> <span class="o">=</span> <span class="s">'https://movie.douban.com/subject/20438962/comments'</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">next_page</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+			<span class="k">yield</span> <span class="n">request</span></code></pre></figure>
+
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="http://Marsrocky.github.io//life/2016/09/22/Light-in-the-darkness/" data-toggle="tooltip" data-placement="top" title="Light in the darkness">&larr; Previous Post</a> 
+                    </li>
+                     
+                     
+                </ul>
+            <hr>
+            <!-- 多说评论框 start -->
+            <div class="ds-thread" data-thread-key="/course/2016/09/23/Linear-Classification" data-title="Linear Classification" data-url="/course/2016/09/23/Linear-Classification/"></div>
+            <!-- 多说评论框 end -->
+            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+            <script type="text/javascript">
+            var duoshuoQuery = {short_name:"marsrocky"};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0] 
+                 || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+            </script>
+            <!-- 多说公共JS代码 end -->
+            </div>
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="http://www.renren.com/263506266/profile">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-renren fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="http://weibo.com/2805657695">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://twitter.com/Marsrocky">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/jianfei.yang.526">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/Marsrocky">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2016</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>
