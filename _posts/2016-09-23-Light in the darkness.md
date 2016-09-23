@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Light in the darkness"
-subtitle:   "追忆大学那四年"
+subtitle:   "追忆大学时光"
 date:       2016-9-22 22:11
 author:     "Jianfei"
 header-img: "img/post-bachelor.jpg"
