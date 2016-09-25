@@ -9,7 +9,7 @@ tags:        [CS231n]
 category:   Course
 ---
 
-## CS231n Introduction
+## CS231n简介
 [Stanford CS231n-Convolutional Neural Networks for Visual Recognition(Winter 2016)](http://cs231n.stanford.edu/)是一门讲述CNN在图像识别和分类中应用的课程，由Prof. Feifei Li授课。它包括两个模块，分别是Neural Networks和Convolutional Neural Networks，课程可用资源为[Course Notes](http://cs231n.github.io/)与[知乎翻译版](https://zhuanlan.zhihu.com/intelligentunit)。另外在Youtube中有完整版的[Lecture Video](https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG)。使用的数据集来自多伦多大学的[Cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html)。
 
 选择这门MOOC来自学，也是想在做其他领域的同时不抛弃原本做过的计算机视觉领域，并将机器学习与神经网络的知识融会贯通，说不定会在自己的领域有新的想法。

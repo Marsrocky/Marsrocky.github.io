@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jianfei from Mars">
 
-    <title>Linear Classification - Marsrock</title>
+    <title>CS231n: Linear Classification - Marsrock</title>
 
     <link rel="canonical" href="http://Marsrocky.github.io/course/2016/09/23/Linear-Classification/">
 
@@ -146,7 +146,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Linear Classification</h1>
+                    <h1>CS231n: Linear Classification</h1>
                     
                     <h2 class="subheading">线性分类笔记</h2>
                     
@@ -163,58 +163,41 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>测试</p>
+				<h2 id="cs231n-introduction">CS231n Introduction</h2>
+<p><a href="http://cs231n.stanford.edu/">Stanford CS231n-Convolutional Neural Networks for Visual Recognition(Winter 2016)</a>是一门讲述CNN在图像识别和分类中应用的课程，由Prof. Feifei Li授课。它包括两个模块，分别是Neural Networks和Convolutional Neural Networks，课程可用资源为<a href="http://cs231n.github.io/">Course Notes</a>与<a href="https://zhuanlan.zhihu.com/intelligentunit">知乎翻译版</a>。另外在Youtube中有完整版的<a href="https://www.youtube.com/playlist?list=PLLvH2FwAQhnpj1WEB-jHmPuUeQ8mX-XXG">Lecture Video</a>。使用的数据集来自多伦多大学的<a href="https://www.cs.toronto.edu/~kriz/cifar.html">Cifar-10</a>。</p>
 
-<p>测试mathjax$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$</p>
+<p>选择这门MOOC来自学，也是想在做其他领域的同时不抛弃原本做过的计算机视觉领域，并将机器学习与神经网络的知识融会贯通，说不定会在自己的领域有新的想法。</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">scrapy</span>
+<p>前几章铺垫的部分讲述了<strong>Python与numpy库</strong>的基本用法，并简单阐述了<strong>图像分类</strong>这一概念的目标与简单实现方法（KNN）。笔记我将直接从线性分类器开始写起。</p>
 
-<span class="kn">from</span> <span class="nn">dbspider.items</span> <span class="kn">import</span> <span class="n">DbspiderItem</span>
-<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
-<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">HtmlResponse</span>
-<span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">Request</span>
+<h3 id="section">线性分类</h3>
+<p>图像分类是从已有的固定标签中选择一个合适的标签给一张新的图像。k-Nearest Neighbor分类器通过比较新图像$I_{test}$与所有训练集${I_{train}}$的距离来判断它的标签。但是k-NN需要将所有的训练数据存储用于比较，存储与计算的复杂度高。</p>
 
-<span class="k">class</span> <span class="nc">DbSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">spiders</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-	<span class="n">name</span> <span class="o">=</span> <span class="s">"dbmovie"</span>
-	<span class="n">allow_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s">"douban.com"</span><span class="p">]</span>
-	<span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
-		<span class="s">"https://movie.douban.com/subject/20438962/comments"</span>
-	<span class="p">]</span>
+<p>我们需要实现一种新的方法来解决图像分类问题。它包括两个部分：一个是<strong>评分函数(score function)</strong>，是从原始图像到类标的映射；另一个是<strong>损失函数(loss function)</strong>，用来量化预测结果与真实结果的一致性。于是该方法可以被转化为一个<strong>最优化问题</strong>，通过更新评分函数的参数来最小化损失函数的结果。</p>
 
-	<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-		<span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">'Url crawled: </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-		<span class="n">item</span> <span class="o">=</span> <span class="n">DbspiderItem</span><span class="p">()</span>
-		
-		<span class="c"># Grade of movie</span>
-		<span class="n">item</span><span class="p">[</span><span class="s">'grade'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-info"]/span[contains(@class, "allstar")]/@title'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-		<span class="c"># Time of comment</span>
-		<span class="n">item</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-info"]/span[@class=""]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-		<span class="c"># Approval of comment</span>
-		<span class="n">item</span><span class="p">[</span><span class="s">'approval'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/h3/span[@class="comment-vote"]/span[contains(@class, "votes")]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-		<span class="c"># Comment of movie</span>
-		<span class="n">item</span><span class="p">[</span><span class="s">'comment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">'//div[@class="comment"]/p[@class=""]/text()[1]'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<h3 id="section-1">评分函数</h3>
+<p>评分函数将图像的像素值映射到各个类别的得分，而得分的高低代表了属于该类别的可能性高低。我们假设一个包含很多图像的训练集$x_i \in R^D$，对应一个分类标签$y_i$且$y_i \in 1, …, K$。这里我们有个$N$训练样本，图像维度为$D$，有$K$种分类标签。在CIFAR-10中，$N=50000$，$D=32\times32\times3$，$K=10$，定义评分函数$f: R^D\to R^K$。</p>
 
-		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'data_result.txt'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
-				<span class="c"># f.write('num: %s\n' % str(i+1))</span>
-				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'time: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'time'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
-				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'approval: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'approval'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
-				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'comment: </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="n">item</span><span class="p">[</span><span class="s">'comment'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+<p>最简单的概率函数就是线性映射，也就是线性分类器的评分函数：
+<script type="math/tex">f(x_i,W,b)=Wx_i+b</script>
+其中$W$被称为权重，$b$被称为偏差向量。输入图像$x_i$被拉长为一个长度为D的列向量。</p>
 
-				<span class="c"># Due to the possible lost data, we don`t use this data</span>
-				<span class="c"># f.write('grade: %s\n' % item['grade'][i].encode('utf-8'))		</span>
+<p>这样训练后得到的权值矩阵就代表了训练数据给出的分类信息，而不用再保留大量的训练数据。而计算复杂度只是一个矩阵乘法和加法就够了。</p>
 
-				<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
-			<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<p><a href="#">
+    <img class="img-responsive" src="http://cs231n.github.io/assets/imagemap.jpg" alt="" width="100%" /></a>
+首先将图像像素拉伸为一个列向量，与W进行矩阵乘，然后得到各个分类的分值。这个过程实际上是在高维空间当中的线性二值分类。线性分类器中的权重矩阵每一行对应着一个分类的模板，而图像不同分类的得分是通过计算图像与模板的内积得到的。模板是通过训练集训练得到的，而内积衡量了距离（相似度）。
+<a href="#">
+    <img class="img-responsive" src="http://cs231n.github.io/assets/templates.jpg" alt="" width="100%" /></a>
+另外，为了便于计算，我们把偏差向量放到权重矩阵的最后一列，并在测试图像的列向量中增加一个单位末尾元素，
+<a href="#">
+    <img class="img-responsive" src="http://cs231n.github.io/assets/wb.jpeg" alt="" width="100%" /></a></p>
 
-		<span class="k">yield</span> <span class="n">item</span>
+<p><strong>数据预处理：</strong>机器学习中我们常对特征值做normalization，而再图像分类时我们常常对每个特征值减去平均值来中心化数据。上述图像在中心化后将分布在$[-127,127]$之间，然后再根据某些规则使区间变为$[-1,1]$。总之，zero mean centering是非常重要的。</p>
 
-		<span class="n">next_page</span> <span class="o">=</span> <span class="s">'//div[@id="paginator"]/a[@class="next"]/@href'</span>
-		<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">next_page</span><span class="p">):</span>
-			<span class="n">next_url</span> <span class="o">=</span> <span class="s">'https://movie.douban.com/subject/20438962/comments'</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">next_page</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-			<span class="n">request</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
-			<span class="k">yield</span> <span class="n">request</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span>
+<span class="k">print</span> <span class="s">'Hello CS231n'</span></code></pre></figure>
+
 
 
                 <hr>
@@ -228,7 +211,7 @@
                 </ul>
             <hr>
             <!-- 多说评论框 start -->
-            <div class="ds-thread" data-thread-key="/course/2016/09/23/Linear-Classification" data-title="Linear Classification" data-url="/course/2016/09/23/Linear-Classification/"></div>
+            <div class="ds-thread" data-thread-key="/course/2016/09/23/Linear-Classification" data-title="CS231n: Linear Classification" data-url="/course/2016/09/23/Linear-Classification/"></div>
             <!-- 多说评论框 end -->
             <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
             <script type="text/javascript">
