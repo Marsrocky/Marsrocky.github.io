@@ -2,7 +2,7 @@
 layout:     post
 title:      "CS231n: Linear Classification"
 subtitle:   "线性分类笔记"
-date:       2016-09-23 15:00
+date:       2016-09-26 15:00
 author:     "Jianfei"
 header-img: "img/post-bg-lc.jpg"
 tags:        [CS231n]
