@@ -165,8 +165,7 @@ while True:
 {% endhighlight %}
 
 最优化是为了解决损失函数最小时权重矩阵如何得到的问题，也就是求参的问题。当损失函数为凸函数可以使用凸优化，而当不可微点多或非凸函数时，则要使用梯度下降的方法求局部最优，有时近似法也要用来进行梯度检查。
-<a href="#">
-    <img class="img-responsive" src="http://cs231n.github.io/assets/dataflow.jpeg" alt="" width="100%"></a>
 
 后面我将继续学习**反向传播(backpropagation)机制**，它使用链式法则来高效计算梯度，能够对包含CNN在内的大多数神经网络的损失函数进行最优化。
-
+<a href="#">
+    <img class="img-responsive" src="http://cs231n.github.io/assets/dataflow.jpeg" alt="" width="100%"></a>
