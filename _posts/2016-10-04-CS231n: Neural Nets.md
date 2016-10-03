@@ -2,7 +2,7 @@
 layout:     post
 title:      "CS231n: Neural Nets"
 subtitle:   "神经网络笔记"
-date:       2016-09-30 10:36
+date:       2016-10-04 10:36
 author:     "Jianfei"
 header-img: "img/post-bg-lc.jpg"
 tags:        [CS231n]

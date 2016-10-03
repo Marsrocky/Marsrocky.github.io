@@ -132,6 +132,10 @@
                     
                 </li>
                 
+                <li>
+                    
+                </li>
+                
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -147,9 +151,191 @@
     <description>Jianfei from Mars</description>
     <link>http://Marsrocky.github.io/</link>
     <atom:link href="http://Marsrocky.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 29 Sep 2016 10:25:32 +0800</pubDate>
-    <lastBuildDate>Thu, 29 Sep 2016 10:25:32 +0800</lastBuildDate>
+    <pubDate>Mon, 03 Oct 2016 17:04:18 +0800</pubDate>
+    <lastBuildDate>Mon, 03 Oct 2016 17:04:18 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>CS231n: Back Propagation</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;反向传播&lt;/h2&gt;
+
+&lt;p&gt;反向传播是用来计算给定函数$f(x)$关于$x$的梯度$\bigtriangledown f(x)$，根据梯度可以更快地进行参数更新。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;简单表达式&lt;/h2&gt;
+
+&lt;p&gt;函数变量在某个点周围的极小区域内变化，导数和偏导数就是沿着某个方向的变化率，而梯度则是偏导数的向量：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{df(x)}{dx}=lim_{h \to 0}\frac{f(x+h)-f(x)}{h}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\bigtriangledown f(x, y)=[\frac{\partial f}{x}, \frac{\partial f}{y}]&lt;/script&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;链式法则&lt;/h2&gt;
+&lt;p&gt;链式法则就是我们高数里学过的，复合函数求导时，导数等于各个复合函数梯度表达式（导数）的乘积。在实际代码实现时，只是单纯将两个梯度数值相乘：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 设置输入值&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 进行前向传播&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# q becomes 3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# f becomes -12&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 进行反向传播:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 首先回传到 f = q * z&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfdz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# df/dz = q, 所以关于z的梯度是3&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfdq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# df/dq = z, 所以关于q的梯度是-4&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 现在回传到q = x + y&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfdx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfdq&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# dq/dx = 1. 这里的乘法是因为链式法则&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dfdy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dfdq&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# dq/dy = 1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;图中展示了计算的过程，前向传播将输入值用于计算输出，反向传播从尾部开始，利用链式法则递归计算梯度。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;反向传播的意义&lt;/h3&gt;
+&lt;p&gt;反向传播可以看做门单元之间通过梯度信号进行通信，让它们的输入沿着梯度方向变化，局部计算后可以提升整个网络的输出值。实际上，无论是乘法、加法还是MAX都可以看做是门。初此之外还有以下四种门：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x)=\frac{1}{x} \to \frac{df}{dx}=-\frac{1}{x^2}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f_c(x)=c+x \to \frac{df}{dx}=1&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x)=e^x \to \frac{df}{dx}=e^x&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f_a(x)=ax \to \frac{df}{dx}=a&lt;/script&gt;
+
+&lt;p&gt;其中包括将输入值平移和实数倍放大的函数。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sigmoid例子
+一个函数可以看成多个门的结合，下面的表达式描述了一个含输入$x$和权重$W$的二维神经元，该神经元使用了sigmoid激活函数。这个函数可以如下计算：
+&lt;a href=&quot;#&quot;&gt;
+  &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop2.png&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;
+对于sigmoid函数，其求导使可以进行简化的，因为我们发现：
+&lt;script type=&quot;math/tex&quot;&gt;\sigma(x)=\frac{1}{1+e^{-x}}&lt;/script&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\frac{d\sigma(x)}{dx}=(1-\sigma(x))\sigma(x)&lt;/script&gt;
+而在具体实现中，可以使用分段的反向传播，可以让局部梯度计算简洁，代码量小，效率高。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 假设一些随机数据和权重&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 前向传播&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# sigmoid函数&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 对神经元反向传播&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 点积变量的梯度, 使用sigmoid函数求导&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 回传到x&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dw&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 回传到w&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;分段计算
+输入的函数如下：
+&lt;script type=&quot;math/tex&quot;&gt;f(x,y)=\frac{x+\sigma(y)}{\sigma(x)+(x+y)^2}&lt;/script&gt;
+这个函数如果进行微分运算，将会得到巨大复杂的展开式。其实我们根本不需要明确的函数来计算梯度，只需要通过反向传播就好了。首先构建前向传播的代码：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 例子数值&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 前向传播&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sigy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 分子中的sigmoi          #(1)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigy&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 分子                                    #(2)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sigx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;math&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 分母中的sigmoid         #(3)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;xpy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;                                              &lt;span class=&quot;c&quot;&gt;#(4)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;xpysqr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xpy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;                                          &lt;span class=&quot;c&quot;&gt;#(5)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;den&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xpysqr&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 分母                                #(6)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;invden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;                                       &lt;span class=&quot;c&quot;&gt;#(7)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invden&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 搞定！                                 #(8)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;然后这些中间变量都是比较简单的表达式，它们计算梯度的方法都很简单。所以我们只需要将这些变量的值进行回传就可以计算对应的梯度了：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 回传 f = num * invden&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;invden&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 分子的梯度                                         #(8)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dinvden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;                                                     &lt;span class=&quot;c&quot;&gt;#(8)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 invden = 1.0 / den &lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dinvden&lt;/span&gt;                                &lt;span class=&quot;c&quot;&gt;#(7)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 den = sigx + xpysqr&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dsigx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dden&lt;/span&gt;                                                &lt;span class=&quot;c&quot;&gt;#(6)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dxpysqr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dden&lt;/span&gt;                                              &lt;span class=&quot;c&quot;&gt;#(6)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 xpysqr = xpy**2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dxpy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dxpysqr&lt;/span&gt;                                        &lt;span class=&quot;c&quot;&gt;#(5)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 xpy = x + y&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dxpy&lt;/span&gt;                                                   &lt;span class=&quot;c&quot;&gt;#(4)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dxpy&lt;/span&gt;                                                   &lt;span class=&quot;c&quot;&gt;#(4)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 sigx = 1.0 / (1 + math.exp(-x))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dsigx&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Notice += !! See notes below  #(3)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 num = x + sigy&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dnum&lt;/span&gt;                                                  &lt;span class=&quot;c&quot;&gt;#(2)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dsigy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dnum&lt;/span&gt;                                                &lt;span class=&quot;c&quot;&gt;#(2)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 回传 sigy = 1.0 / (1 + math.exp(-y))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dsigy&lt;/span&gt;                                 &lt;span class=&quot;c&quot;&gt;#(1)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 完成! 嗷~~&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;中间有大量的中间变量需要缓存，在不同分支的梯度计算后，如果同一变量在前向传播中出现多次，就要通过微积分中的多元链式法则进行累加。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;回传流中的模式&lt;/h3&gt;
+&lt;p&gt;观察一个包括加法乘法流的例子：
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop3.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;可以看出，每种门单元有着不同的回传机制：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;加法门：把输出的梯度相等地分发给它所有的输入，这一行为与输入值在前向传播时的值无关。这是因为加法操作的局部梯度都是简单的+1，所以所有输入的梯度实际上就等于输出的梯度，因为乘以1.0保持不变。&lt;/li&gt;
+  &lt;li&gt;max门：对梯度做路由。取最大值门将梯度转给其中一个输入，这个输入是在前向传播中值最大的那个输入。这是因为在取最大值门中，最高值的局部梯度是1.0，其余的是0。（选择器）&lt;/li&gt;
+  &lt;li&gt;乘法门：它的局部梯度就是输入值，但是是相互交换之后的，然后根据链式法则乘以输出值的梯度。但是如果一个输入非常大，一个非常小，那么交换后获得的梯度将会跟输入数据的大小密切相关。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;矩阵操作&lt;/h3&gt;
+&lt;p&gt;当真正进行计算时，大多是矩阵和向量操作。矩阵相乘时有很多好的操作习惯，比如矩阵转置，比如维度分析：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 前向传播&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 假设我们得到了D的梯度&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dD&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 和D一样的尺寸&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dW&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#.T就是对矩阵进行转置&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;通过反向传播，程序可以通过简单地编写实现高效的参数计算。下节课我将会学习神经网络的基本概念，而其其训练的数学理论基本就来源于最优化与反向传播了。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 03 Oct 2016 15:56:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/course/2016/10/03/CS231n-Back-Propagation/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/course/2016/10/03/CS231n-Back-Propagation/</guid>
+        
+        <category>CS231n</category>
+        
+        
+        <category>Course</category>
+        
+      </item>
+    
+      <item>
+        <title>CS231n: Neural Nets</title>
+        <description>&lt;h2 id=&quot;neural-networks&quot;&gt;神经网络 Neural Networks&lt;/h2&gt;
+
+&lt;p&gt;神经网络算法的计算公式是$s=W_2 max(0, W_1 x)$。$W_1$可以将图像转化为一个相比分类个数来说高维一些的特征过渡向量。比如对于CIFAR-10中，该矩阵大小为$[100\times 3072]$。函数$max(0, ~)$为非线性，会作用到每个元素，这个非线性函数可以更换。第二个矩阵$W_2$则是$[10\times100]%$，可以得到最终的10个分类评分。两个参数矩阵可以通过随机梯度下降来学习（梯度通过反向传播的链式法则求导计算），而神经网络的关键改变在于非线性函数的引入。最终，一个三层的神经网络可以写成$s=W_3 max(0,W_2 max(0,W_1 x))$，其中包括三个权重矩阵需要学习，而中间隐层的尺寸是网络而超参数。&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;单个神经元&lt;/h3&gt;
+
+&lt;p&gt;生物学中的神经元通过树突获得输入信号，然后沿着他唯一的轴突产生输出信号。从仿生的方向考虑，单个神经元的计算模式为基于其他神经元输入的突触强度($w_i$)，与其他神经元的树突进行乘法交互。突触的强度可以控制一个神经元对于另一个神经元的影响强度，使其兴奋或者抑制。各输入信号在胞体中进行叠加，若高于某阈值则会激活神经元，向轴突输出一个峰值信号。神经元的激活率建模为激活函数，它常常选择使用sigmoid函数，它将输入信号值压缩到0-1之间。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img class=&quot;img-responsive&quot; src=&quot;&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 30 Sep 2016 10:36:00 +0800</pubDate>
+        <link>http://Marsrocky.github.io/course/2016/09/30/CS231n-Neural-Nets/</link>
+        <guid isPermaLink="true">http://Marsrocky.github.io/course/2016/09/30/CS231n-Neural-Nets/</guid>
+        
+        <category>CS231n</category>
+        
+        
+        <category>Course</category>
+        
+      </item>
     
       <item>
         <title>CS231n: Optimization</title>
@@ -813,31 +999,6 @@
         
         
         <category>UAV</category>
-        
-      </item>
-    
-      <item>
-        <title>The Blog Bang</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;起源&lt;/h2&gt;
-
-&lt;blockquote&gt;就像宇宙和生活大爆炸一样，这里始于人生中一个质点的爆炸，自此我决定在这里书写我与我的一切。&lt;/blockquote&gt;
-
-&lt;h2 class=&quot;section-heading&quot;&gt;分享阳光，分担风雨&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
-    &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;/a&gt;
-&lt;span class=&quot;caption text-muted&quot;&gt;记录生活，家人，朋友，和一切正能量。&lt;/span&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 21 Nov 2014 19:00:00 +0800</pubDate>
-        <link>http://Marsrocky.github.io/life/2014/11/21/Blog-bang/</link>
-        <guid isPermaLink="true">http://Marsrocky.github.io/life/2014/11/21/Blog-bang/</guid>
-        
-        <category>start</category>
-        
-        <category>lucky</category>
-        
-        
-        <category>Life</category>
         
       </item>
     
