@@ -132,6 +132,10 @@
                     
                 </li>
                 
+                <li>
+                    
+                </li>
+                
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -163,14 +167,163 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				
+				<h3 id="scala">Scala</h3>
+<ul>
+  <li>Scala运行于Java平台（Java虚拟机），并兼容现有的Java程序。</li>
+  <li>洛桑联邦理工学院的Martin Odersky于2001年基于Funnel的工作开始设计Scala。</li>
+  <li>Twitter, Coursera的后台服务器语言</li>
+  <li>特性：面向对象、函数式编程、静态类型、扩展性、并发性。</li>
+</ul>
+
+<h3 id="section">基本语法</h3>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">//Run the interpreter 
+//sbt console 
+</span>
+<span class="c1">//值，不变量 
+</span>
+<span class="k">val</span> <span class="n">two</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c1">//变量，绑定结果和名称 
+</span>
+<span class="k">var</span> <span class="n">name</span> <span class="k">=</span> <span class="s">"jianfei"</span>
+
+<span class="c1">//函数 
+</span>
+<span class="k">def</span> <span class="n">addOne</span><span class="o">(</span><span class="n">m</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="c1">//不带参函数，可以省略括号 
+</span>
+<span class="k">def</span> <span class="n">three</span><span class="o">()</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="c1">//匿名函数 
+</span>
+<span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="c1">//可以传递匿名函数，同时定义了它的使用名称
+</span>
+<span class="k">val</span> <span class="n">addOne</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span><span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c1">//用大括号格式化代码 
+</span>
+<span class="o">{</span><span class="n">i</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span>
+	<span class="n">println</span><span class="o">(</span><span class="s">"hello world"</span><span class="o">)</span>
+	<span class="n">i</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="o">}</span>
+
+<span class="c1">//部分应用 
+</span>
+<span class="k">def</span> <span class="n">adder</span><span class="o">(</span><span class="n">m</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span>
+<span class="k">val</span> <span class="n">add2</span> <span class="k">=</span> <span class="n">adder</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="k">_:</span><span class="kt">Int</span><span class="o">)</span>
+<span class="n">add2</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+<span class="c1">//会得到5，下划线表示了部分应用了一个函数 
+</span>
+<span class="c1">//柯里化函数 
+</span>
+<span class="c1">//允许之应用一部分参数 
+</span>
+<span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="n">m</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">n</span>
+<span class="k">val</span> <span class="n">timesTwo</span> <span class="k">=</span> <span class="n">multiply</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span> <span class="k">_</span>
+
+<span class="c1">//可变长度参数，可以传多个同类型参数 
+//这里对args的每一个arg进行了大写操作 
+</span>
+<span class="k">def</span> <span class="n">capitalizeAll</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">String*</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+	<span class="n">args</span><span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">arg</span> <span class="k">=&gt;</span>
+		<span class="n">arg</span><span class="o">.</span><span class="n">capitalize</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//类 
+</span>
+<span class="k">class</span> <span class="nc">Calculator</span><span class="o">{</span>
+	<span class="k">val</span> <span class="n">brand</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"Hp"</span>
+	<span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">m</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span>
+<span class="o">}</span>
+
+<span class="c1">//构造函数 
+</span>
+<span class="k">class</span> <span class="nc">Calculator</span><span class="o">(</span><span class="n">brand</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">color</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">brand</span> <span class="o">==</span> <span class="s">"TI"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="s">"blue"</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">brand</span> <span class="o">==</span> <span class="s">"HP"</span><span class="o">)</span> <span class="o">{</span>
+    <span class="s">"black"</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="s">"white"</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//函数和方法在很大程度上是可以互换的。 
+//由于函数和方法是如此的相似，你可能都不知道你调用的东西是一个函数还是一个方法。
+</span>
+<span class="k">class</span>  <span class="nc">C</span><span class="o">{</span>
+	<span class="k">var</span> <span class="n">acc</span> <span class="k">=</span> <span class="mi">0</span>
+	<span class="k">def</span> <span class="n">minc</span> <span class="k">=</span> <span class="o">{</span><span class="n">acc</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">}</span>
+	<span class="k">val</span> <span class="n">finc</span> <span class="k">=</span> <span class="o">{()</span> <span class="k">=&gt;</span> <span class="n">acc</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">c</span> <span class="k">=</span> <span class="k">new</span> <span class="n">C</span>
+<span class="n">c</span><span class="o">.</span><span class="n">minc</span>
+<span class="n">c</span><span class="o">.</span><span class="n">finc</span>
+
+<span class="c1">//继承 
+</span>
+<span class="k">class</span> <span class="nc">ScientificCalculator</span><span class="o">(</span><span class="n">brand</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Calculator</span><span class="o">(</span><span class="n">brand</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">m</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">base</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="n">m</span><span class="o">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="n">base</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="c1">//抽象类 
+//你可以定义一个抽象类，它定义了一些方法但没有实现它们。 
+//取而代之是由扩展抽象类的子类定义这些方法。你不能创建抽象类的实例。 
+</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Shape</span><span class="o">{</span>
+	<span class="k">def</span> <span class="n">getArea</span><span class="o">()</span><span class="k">:</span><span class="kt">Int</span>
+<span class="o">}</span>
+<span class="c1">//重载
+</span>
+<span class="k">class</span> <span class="nc">Circle</span><span class="o">(</span><span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Shape</span><span class="o">{</span>
+	<span class="k">def</span> <span class="n">getArea</span><span class="o">()</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="mi">3</span><span class="o">}</span>
+<span class="o">}</span>
+<span class="k">val</span> <span class="n">c</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Circle</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span>
+
+<span class="c1">//特质(Traits) 
+//特质是一些字段和行为的集合，可以扩展或混入（mixin）你的类中。 
+</span>
+<span class="k">trait</span> <span class="nc">Car</span> <span class="o">{</span>
+	<span class="k">val</span> <span class="n">brand</span><span class="k">:</span> <span class="kt">String</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Shiny</span> <span class="o">{</span>
+	<span class="k">val</span> <span class="n">shineRefraction</span><span class="k">:</span> <span class="kt">Int</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">BMW</span> <span class="k">extends</span> <span class="nc">Car</span><span class="o">{</span>
+	<span class="k">val</span> <span class="n">brand</span> <span class="k">=</span> <span class="s">"BMW"</span>
+<span class="o">}</span>
+<span class="c1">//通过with，可以同时扩展多个特质 
+</span>
+<span class="k">class</span> <span class="nc">BMW</span> <span class="k">extends</span> <span class="nc">Car</span> <span class="k">with</span> <span class="nc">Shiny</span><span class="o">{</span>
+	<span class="k">val</span> <span class="n">brand</span> <span class="k">=</span> <span class="s">"BMW"</span>
+	<span class="k">val</span>	<span class="n">shineRefraction</span> <span class="k">=</span> <span class="mi">12</span>
+<span class="o">}</span>
+
+<span class="c1">//类型 
+//其实函数也可以是泛型的，来适用于所有类型。 
+//当这种情况发生时，你会看到用方括号语法引入的类型参数。 
+</span>
+<span class="k">trait</span> <span class="nc">Cache</span><span class="o">[</span><span class="kt">K</span>, <span class="kt">V</span><span class="o">]{</span>
+	<span class="k">def</span> <span class="n">get</span><span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">K</span><span class="o">)</span><span class="k">:</span> <span class="kt">V</span>
+	<span class="k">def</span> <span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">K</span><span class="o">,</span> <span class="n">value</span><span class="k">:</span> <span class="kt">V</span><span class="o">)</span>
+	<span class="k">def</span> <span class="n">delete</span><span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">K</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="c1">//方法也可以 
+</span>
+<span class="k">def</span> <span class="n">remove</span><span class="o">[</span><span class="kt">K</span><span class="o">](</span><span class="n">key</span><span class="k">:</span> <span class="kt">K</span><span class="o">)</span></code></pre></figure>
 
 
                 <hr>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="http://localhost:4000//life/2016/09/22/Light-in-the-darkness/" data-toggle="tooltip" data-placement="top" title="Light in the darkness">&larr; Previous Post</a> 
+                        <a href="http://localhost:4000//course/2016/10/04/CS231n-Neural-Nets/" data-toggle="tooltip" data-placement="top" title="CS231n: Neural Nets">&larr; Previous Post</a> 
                     </li>
                      
                      

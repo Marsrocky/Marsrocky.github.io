@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jianfei from Mars">
 
-    <title>Robot Nao Developing Story - Marsrock</title>
+    <title>CS231n: Neural Nets - Marsrock</title>
 
-    <link rel="canonical" href="http://localhost:4000/hackathon/2015/03/18/Nao-Robot-Develop-Story/">
+    <link rel="canonical" href="http://localhost:4000/course/2016/10/04/CS231n-Neural-Nets/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,16 +145,16 @@
 
 
     <!-- Post Header -->
-<header class="intro-header" style="background-image: url('/img/NaoHeader.jpg')">
+<header class="intro-header" style="background-image: url('/img/post-bg-lc.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>Robot Nao Developing Story</h1>
+                    <h1>CS231n: Neural Nets</h1>
                     
-                    <h2 class="subheading">Nao机器人开发日记</h2>
+                    <h2 class="subheading">神经网络笔记</h2>
                     
-                    <span class="meta">Posted by Jianfei on March 18, 2015</span>
+                    <span class="meta">Posted by Jianfei on October 4, 2016</span>
                 </div>
             </div>
         </div>
@@ -167,40 +167,35 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h2 class="section-heading">Hello, Nao! </h2>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骏马腾飞春来报，梅花绽放祝福道。转眼已是马年，期间做了些水水的项目，写了些水水的paper，重要的是家人团聚过大年。回来的第一个周，就来参加Nao的机器人创客马拉松。不同于之前参加的Hackathon，这次由于是基于特定机器人Nao开发，所以之前还有一个基础的培训。</p>
+				<h2 id="neural-networks">神经网络 Neural Networks</h2>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人形机器人Nao是世界上最先进的人形机器人之一，在培训中，我们学习了其C++/Python的API，并简单的了解了其硬件设施，包括步进电机、传感器和处理设备。其复杂的传感设备和电机都可以通过编写参数来调节，为方便工程师和设计师，ALDEBARAN公司开发Choregraphe图形化编程界面，其语言类似Labview的G语言，由模块连接而成，而每个模块都可以通过修改Python代码改变其基础功能。</p>
+<p>神经网络算法的计算公式是$s=W_2 max(0, W_1 x)$。$W_1$可以将图像转化为一个相比分类个数来说高维一些的特征过渡向量。比如对于CIFAR-10中，该矩阵大小为$[100\times 3072]$。函数$max(0, ~)$为非线性，会作用到每个元素，这个非线性函数可以更换。第二个矩阵$W_2$则是$[10\times100]%$，可以得到最终的10个分类评分。两个参数矩阵可以通过随机梯度下降来学习（梯度通过反向传播的链式法则求导计算），而神经网络的关键改变在于非线性函数的引入。最终，一个三层的神经网络可以写成$s=W_3 max(0,W_2 max(0,W_1 x))$，其中包括三个权重矩阵需要学习，而中间隐层的尺寸是网络而超参数。</p>
 
-<h2 class="section-heading">Match and coding </h2>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基于特定的机器人，我们首先考虑了它的用途，基于其大小、形状和API特性，我们设计了一套用于presentation的自动化部署程序，即连接PC和Nao，用户只需要提供ppt和想要演讲的文字，Nao会帮助用户完成自动的展示。机器人的展示脱离了枯燥无味的风格，也不会受到人为因素的影响，其高逼格的特点使得发布会、演示甚至授课轻松有趣。</p>
+<h3 id="section">单个神经元</h3>
+
+<p>生物学中的神经元通过树突获得输入信号，然后沿着他唯一的轴突产生输出信号。从仿生的方向考虑，单个神经元的计算模式为基于其他神经元输入的突触强度($w_i$)，与其他神经元的树突进行乘法交互。突触的强度可以控制一个神经元对于另一个神经元的影响强度，使其兴奋或者抑制。各输入信号在胞体中进行叠加，若高于某阈值则会激活神经元，向轴突输出一个峰值信号。神经元的激活率建模为激活函数，它常常选择使用sigmoid函数，它将输入信号值压缩到0-1之间。</p>
 
 <p><a href="#">
-    <img class="img-responsive" src="/img/Nao.jpg" alt="" />
-</a>
-<span class="caption text-muted">Nao and me!</span></p>
+    <img class="img-responsive" src="" alt="" width="100%" /></a></p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们的作品幸运得在最后的评比中夺得一等奖，也是参加Hackathon的第一个名誉性成果，48小时的连续编程实属不易！</p>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;后续我们的作品在广交会（Canton Fair）中展出，为创锐科技公司的音响设备做了高大上的介绍和发布！</p>
 
 
                 <hr>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="http://localhost:4000//visualization/2014/12/21/3D-Earth-to-show-statistics/" data-toggle="tooltip" data-placement="top" title="3D Earth to Show statistics">&larr; Previous Post</a> 
+                        <a href="http://localhost:4000//course/2016/10/03/CS231n-Back-Propagation/" data-toggle="tooltip" data-placement="top" title="CS231n: Back Propagation">&larr; Previous Post</a> 
                     </li>
                      
                     
                     <li class="next">
-                        <a href="http://localhost:4000//hackathon/2016/09/22/My-travel-through-hackthons/" data-toggle="tooltip" data-placement="top" title="My travel through hackathons">Next Post &rarr;</a>
+                        <a href="http://localhost:4000//programming/2016/10/12/A-Scala-Primer/" data-toggle="tooltip" data-placement="top" title="A Scala Primer">Next Post &rarr;</a>
                     </li>
                      
                 </ul>
             <hr>
             <!-- 多说评论框 start -->
-            <div class="ds-thread" data-thread-key="/hackathon/2015/03/18/Nao Robot Develop Story" data-title="Robot Nao Developing Story" data-url="/hackathon/2015/03/18/Nao-Robot-Develop-Story/"></div>
+            <div class="ds-thread" data-thread-key="/course/2016/10/04/CS231n: Neural Nets" data-title="CS231n: Neural Nets" data-url="/course/2016/10/04/CS231n-Neural-Nets/"></div>
             <!-- 多说评论框 end -->
             <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
             <script type="text/javascript">
