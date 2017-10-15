@@ -169,7 +169,7 @@
 
 				<h2 id="optimization">最优化 Optimization</h2>
 
-<p>最优化就是通过计算权重$W$来最小化损失函数。如果损失函数是SVM损失，那么这个凸函数是可以用凸优化的方法进行的。但是当损失函数扩展成为神经网络时，那么目标函数就不是凸函数了，而且损失函数中存在不可导点(kinks)，使得这些点不可微，在这些点也没有梯度的定义。但是次梯度(subgradient)依然可以使用。</p>
+<p>最优化就是通过计算权重<script type="math/tex">W</script>来最小化损失函数。如果损失函数是SVM损失，那么这个凸函数是可以用凸优化的方法进行的。但是当损失函数扩展成为神经网络时，那么目标函数就不是凸函数了，而且损失函数中存在不可导点(kinks)，使得这些点不可微，在这些点也没有梯度的定义。但是次梯度(subgradient)依然可以使用。</p>
 
 <p>我们从最基本的方案开始逐步过渡到梯度的方法。</p>
 
@@ -199,11 +199,11 @@
 <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span>
 <span class="c"># 返回 0.1555</span></code></pre></figure>
 
-<p>当随机猜测时，正确概率是10%，这里用多次筛选得到随机矩阵提升了一点。如果我们能够设计一个迭代算法，使得每次迭代后的损失值都减少一点，那么就能找到更好的$W$。</p>
+<p>当随机猜测时，正确概率是10%，这里用多次筛选得到随机矩阵提升了一点。如果我们能够设计一个迭代算法，使得每次迭代后的损失值都减少一点，那么就能找到更好的<script type="math/tex">W</script>。</p>
 
 <h3 id="section-1"><strong>随机本地搜索</strong></h3>
 
-<p>设计一个迭代算法，每一次都随机尝试几个方向，如果方向是向下（能让损失值小一点），那就向该方向走一步。依然从随机的$W$开始，每次给予一个随机扰动$\delta W$，如果扰动后损失值更小了，就更新权重矩阵。</p>
+<p>设计一个迭代算法，每一次都随机尝试几个方向，如果方向是向下（能让损失值小一点），那就向该方向走一步。依然从随机的<script type="math/tex">W</script>开始，每次给予一个随机扰动<script type="math/tex">\delta W</script>，如果扰动后损失值更小了，就更新权重矩阵。</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c"># 生成随机初始W</span>
 <span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">"inf"</span><span class="p">)</span>
@@ -230,7 +230,7 @@
   <li>有限差值法近似求梯度</li>
 </ul>
 
-<p>用梯度公式$\frac{f(x+h)-f(x)}{h}$在所有维度上进行计算，得到的grad中包括了在每个维度上的偏导数。h的取值越小越好，实际中使用中心差值公式(centered difference formula，对称差分中一次项误差相消)会更好，公式为$\frac{[f(x+h)-f(x-h)]}{2h}$。以下函数是根据输入函数与向量计算函数梯度的函数：</p>
+<p>用梯度公式<script type="math/tex">\frac{f(x+h)-f(x)}{h}</script>在所有维度上进行计算，得到的grad中包括了在每个维度上的偏导数。h的取值越小越好，实际中使用中心差值公式(centered difference formula，对称差分中一次项误差相消)会更好，公式为<script type="math/tex">\frac{[f(x+h)-f(x-h)]}{2h}</script>。以下函数是根据输入函数与向量计算函数梯度的函数：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">eval_numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
   <span class="s">"""  
@@ -294,7 +294,7 @@
 <p><script type="math/tex">L_i=\sum_{j \neq y_i}[max(0,w_j^T x_i-w_{y_i}^T x_i+\Delta)]</script>
 <script type="math/tex">\bigtriangledown_{w_{y_i}} L_i=-(\sum_{j \neq y_i}\mathbb{I}(w_j^T x_i-w_{y_i}^T x_i+\Delta>0))x_i</script></p>
 
-<p>其中的$\mathbb{I}$是一个示性函数，若括号中条件为真则函数值为1，否则为0。这里的微分公式非常简单，不满足条件的分类乘以$x_i$就是梯度了。这里的梯度对应正确分类的权值矩阵行向量梯度，其他行的梯度为：</p>
+<p>其中的<script type="math/tex">\mathbb{I}</script>是一个示性函数，若括号中条件为真则函数值为1，否则为0。这里的微分公式非常简单，不满足条件的分类乘以<script type="math/tex">x_i</script>就是梯度了。这里的梯度对应正确分类的权值矩阵行向量梯度，其他行的梯度为：</p>
 
 <script type="math/tex; mode=display">\bigtriangledown_{w_{y_i}} L_i=\mathbb{I}(w_j^T x_i-w_{y_i}^T x_i+\Delta>0)x_i</script>
 

@@ -11,7 +11,7 @@ category:   Course
 
 ## 反向传播
 
-反向传播是用来计算给定函数$f(x)$关于$x$的梯度$\bigtriangledown f(x)$，根据梯度可以更快地进行参数更新。
+反向传播是用来计算给定函数$$f(x)$$关于$$x$$的梯度$$\bigtriangledown f(x)$$，根据梯度可以更快地进行参数更新。
 
 ## 简单表达式
 
@@ -64,7 +64,7 @@ $$f_a(x)=ax \to \frac{df}{dx}=a$$
 其中包括将输入值平移和实数倍放大的函数。
 
 - Sigmoid例子
-一个函数可以看成多个门的结合，下面的表达式描述了一个含输入$x$和权重$W$的二维神经元，该神经元使用了sigmoid激活函数。这个函数可以如下计算：
+一个函数可以看成多个门的结合，下面的表达式描述了一个含输入$$x$$和权重$$W$$的二维神经元，该神经元使用了sigmoid激活函数。这个函数可以如下计算：
 <a href="#">
     <img class="img-responsive" src="{{ site.baseurl }}/img/post-backprop2.png" alt="" width="100%"></a>
 对于sigmoid函数，其求导使可以进行简化的，因为我们发现：
