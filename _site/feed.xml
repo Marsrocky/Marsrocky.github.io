@@ -151,9 +151,80 @@
     <description>Jianfei from Mars</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 15 Oct 2017 21:21:34 +0800</pubDate>
-    <lastBuildDate>Sun, 15 Oct 2017 21:21:34 +0800</lastBuildDate>
-    <generator>Jekyll v3.3.0</generator>
+    <pubDate>Wed, 04 Apr 2018 23:33:34 +0800</pubDate>
+    <lastBuildDate>Wed, 04 Apr 2018 23:33:34 +0800</lastBuildDate>
+    <generator>Jekyll v3.7.3</generator>
+    
+      <item>
+        <title>Transfer Component Analysis</title>
+        <description>&lt;h2 id=&quot;引子&quot;&gt;引子&lt;/h2&gt;
+&lt;p&gt;这篇文章诞生于2009年的IJCAI，也是Transfer Learning中公认的经典之作。迁移学习解决的问题是在数据不足导致Model的泛化能力不足时，应当如何通过unlabeled data提高模型的泛化能力。&lt;/p&gt;
+
+&lt;h4 id=&quot;具体问题&quot;&gt;具体问题&lt;/h4&gt;
+&lt;p&gt;TCA想要解决的问题是迁移学习中的一个有趣问题，叫做Domain Adaptation。 说有两个domain，分别是已知类标的Source Domain &lt;script type=&quot;math/tex&quot;&gt;D_S&lt;/script&gt;和未知类标的Target Domain &lt;script type=&quot;math/tex&quot;&gt;D_T&lt;/script&gt;，sample数量分别是&lt;script type=&quot;math/tex&quot;&gt;n_1&lt;/script&gt;和&lt;script type=&quot;math/tex&quot;&gt;n_2&lt;/script&gt;。那么输入数据的边缘分布&lt;script type=&quot;math/tex&quot;&gt;P(X_S)&lt;/script&gt;和&lt;script type=&quot;math/tex&quot;&gt;Q(X_T)&lt;/script&gt;是不同的，那么TCA的目的就是用labelled source data去预测unlabelled target data。&lt;/p&gt;
+
+&lt;h4 id=&quot;基本假设&quot;&gt;基本假设&lt;/h4&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P \neq Q&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(Y_S|X_S)=P(Y_T|X_T)&lt;/script&gt;
+
+&lt;h2 id=&quot;正文&quot;&gt;正文&lt;/h2&gt;
+&lt;p&gt;要想在两个domain的数据上使用传统机器学习方法，需要让他们的数据分布满足&lt;script type=&quot;math/tex&quot;&gt;P=Q&lt;/script&gt;。既然他们本身是不相等的，那么是否可以寻找一个nonlinear transformation &lt;script type=&quot;math/tex&quot;&gt;\phi&lt;/script&gt;，使得&lt;script type=&quot;math/tex&quot;&gt;P'(\phi(X_S))=Q'(\phi(X_T))&lt;/script&gt;，映射后的分布就满足大多数分类回归方法的条件了！&lt;/p&gt;
+
+&lt;p&gt;那么上述的假设就变成了：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(Y_S|\phi(X_S))=P(Y_T|\phi(X_T))&lt;/script&gt;
+
+&lt;p&gt;而如何将两个分布拉到一起呢，这可以等同于一个优化问题，最小化两个分布的距离。用什么距离呢，这里用的是Maximum Mean Discrepancy (MMD)，这里不使用很多其他衡量方法例如KL散度，因为这些方法往往都是参数化的，很难处理。MMD是NIPS2006的一篇文章提出的，文章使用了引理“在选定函数&lt;script type=&quot;math/tex&quot;&gt;f \in C(X)&lt;/script&gt;为continuous bounded functions时，two sample test中的分布&lt;script type=&quot;math/tex&quot;&gt;p=q&lt;/script&gt;与&lt;script type=&quot;math/tex&quot;&gt;E_p(f(x))=E_q(f(x))&lt;/script&gt;是充要条件”提出了使用reproducing kernel Hilbert space (RKHS)中的核函数，并证明了他们的estimate是相当成功的。&lt;/p&gt;
+
+&lt;p&gt;那么衡量两个新的domain在kernel下的分布距离度量可以写成：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Dist(X'_S,X'_T) = ||  \frac{1}{n_1}\sum_{i=1}^{n_1}\phi(x_{S_i})-\frac{1}{n_2}\sum_{i=1}^{n_2}\phi(x_{T_i})  ||^2_H&lt;/script&gt;
+
+&lt;p&gt;在做这个优化问题的时候，之前的工作Maximum Mean Discrepancy Embedding (MMDE)使用了SDP半正定规划去学习一个kernel matrix，但是相当复杂。为了避免显式地计算映射&lt;script type=&quot;math/tex&quot;&gt;\phi&lt;/script&gt;，作者将其转化为一个kernel learning problem，应用kernel trick &lt;script type=&quot;math/tex&quot;&gt;k(x_i,x_j)=\phi(x_i)' \phi(x_j)&lt;/script&gt;，MMD距离可以被写成新的形式：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Dist(X'_S,X'_T) = tr(KL)&lt;/script&gt;
+
+&lt;p&gt;其中&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+K = \begin{bmatrix} 
+K_{S,S} &amp; K_{S,T} \\
+K_{T,S} &amp; K_{T,T}
+\end{bmatrix} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;而L就是用来凑系数的矩阵。&lt;/p&gt;
+
+&lt;p&gt;基本思路已经明白了，但是这时便是作者展现数学功底的时候了，只见他三下五除二，先用一个降维后的矩阵&lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;使得&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;K = (KK^{-1/2}\tilde{W})(\tilde{W}^T K^{-1/2}K)=KWW^TK&lt;/script&gt;
+
+&lt;p&gt;代入原问题，于是问题转化成了更简单的形式：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;min_W \quad tr(W^TW)+\mu tr(W^TKLKW)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;s.t. \quad W^TKHKW=I&lt;/script&gt;
+
+&lt;p&gt;这里我就要问了，H是啥玩意？莫名其妙就说是一个center matrix，这个条件就是TCA的第二个目的，在保持各自数据特征的前提下做domain拉近，而保持的散度特征正是&lt;script type=&quot;math/tex&quot;&gt;AHA^T&lt;/script&gt;，这里和PCA有点类似，降维后保持数据特性不变。&lt;/p&gt;
+
+&lt;p&gt;下面解这个问题的时候，因为条件非凸，需要先做一个转化，再求它的dual problem就可以解了，解的答案简单明了，W就是求&lt;script type=&quot;math/tex&quot;&gt;(I+\mu KLK)^{-1}KHK&lt;/script&gt;的前&lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt;个特征向量，而W的维度正是$(n_1+n_2) \times m$，相当于把所有数据都在分布拉近的同时，降维到了&lt;script type=&quot;math/tex&quot;&gt;m&lt;/script&gt;维度上，后面就可以很简单的使用各种方法进行分类和回归了。&lt;/p&gt;
+
+&lt;h2 id=&quot;后记&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;不得不说，很有趣的问题转化，思路也清楚明白，就是要让我解这个优化问题，那真是老费劲了。科科。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 04 Apr 2018 21:53:00 +0800</pubDate>
+        <link>http://localhost:4000/transfer%20learning/2018/04/04/Transfer-Component-Analysis/</link>
+        <guid isPermaLink="true">http://localhost:4000/transfer%20learning/2018/04/04/Transfer-Component-Analysis/</guid>
+        
+        <category>TCA</category>
+        
+        
+        <category>Transfer Learning</category>
+        
+      </item>
     
       <item>
         <title>A Lua Primer plus Torch</title>
@@ -165,7 +236,7 @@
   &lt;li&gt;Lua没有提供强大的库，不适合作为开发独立应用程序的语言。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;lua-1&quot;&gt;lua的安装&lt;/h4&gt;
+&lt;h4 id=&quot;lua的安装&quot;&gt;lua的安装&lt;/h4&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-linux&quot; data-lang=&quot;linux&quot;&gt;curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
 tar zxf lua-5.3.0.tar.gz
@@ -175,14 +246,14 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Lua也有交互式编程模式，可以通过命令lua直接启动，也可以写好hello.lua文件然后执行。先来学习一波基本语法和特性！&lt;/p&gt;
 
-&lt;h4 id=&quot;lua-&quot;&gt;Lua 基本语法&lt;/h4&gt;
-&lt;h5 id=&quot;section&quot;&gt;[注释]&lt;/h5&gt;
+&lt;h4 id=&quot;lua-基本语法&quot;&gt;Lua 基本语法&lt;/h4&gt;
+&lt;h5 id=&quot;注释&quot;&gt;[注释]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- 两个减号为注释&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;-- 书写时通过指定lua解释器来运行脚本&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lua&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-1&quot;&gt;[标示符]&lt;/h5&gt;
+&lt;h5 id=&quot;标示符&quot;&gt;[标示符]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- 用于定义一个变量，函数获取其他用户定义的项。标示符以一个字母 A 到 Z 或 a 到 z 或下划线 _ 开头后加上0个或多个字母，下划线，数字（0到9）。最好不要使用下划线加大写字母的标示符，因为Lua的保留字也是这样的。&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;-- 变量默认为全局变量&lt;/span&gt;
@@ -193,7 +264,7 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;c1&quot;&gt;-- 局部变量&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-2&quot;&gt;[数据类型]&lt;/h5&gt;
+&lt;h5 id=&quot;数据类型&quot;&gt;[数据类型]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;--nil: 无效值&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;--boolean: false/true&lt;/span&gt;
@@ -204,7 +275,7 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;c1&quot;&gt;--thread: 表示执行的独立线路&lt;/span&gt;
 &lt;span class=&quot;c1&quot;&gt;--table: 关联数组&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-3&quot;&gt;[赋值]&lt;/h5&gt;
+&lt;h5 id=&quot;赋值&quot;&gt;[赋值]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;--同时对多个赋值&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
@@ -212,14 +283,14 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;marsrock.net&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-4&quot;&gt;[循环]&lt;/h5&gt;
+&lt;h5 id=&quot;循环&quot;&gt;[循环]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;--循环会在开始前一次性求值，之后不在求值&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-5&quot;&gt;[函数]&lt;/h5&gt;
+&lt;h5 id=&quot;函数&quot;&gt;[函数]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;cm&quot;&gt;--[[ 函数返回两个值的最大值 --]]&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -235,7 +306,7 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;两值比较最大值为 &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;两值比较最大值为 &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-6&quot;&gt;[字符串]&lt;/h5&gt;
+&lt;h5 id=&quot;字符串&quot;&gt;[字符串]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;--string functions&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;lua&quot;&lt;/span&gt;
@@ -247,7 +318,7 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;nb&quot;&gt;string.len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;abc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;abc&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;def&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;--连接字符串&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-7&quot;&gt;[数组]&lt;/h5&gt;
+&lt;h5 id=&quot;数组&quot;&gt;[数组]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Lua&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Tutorial&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -255,7 +326,7 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
    &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h5 id=&quot;section-8&quot;&gt;[面向对象]&lt;/h5&gt;
+&lt;h5 id=&quot;面向对象&quot;&gt;[面向对象]&lt;/h5&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- Meta class&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;Shape&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -284,17 +355,17 @@ make install&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
   &lt;li&gt;Facebook的AI团队发布了Pytorch，针对GPU加速的DNN编程。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;section-9&quot;&gt;安装&lt;/h4&gt;
+&lt;h4 id=&quot;安装&quot;&gt;安装&lt;/h4&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;# in a terminal, run the commands WITHOUT sudo&lt;/span&gt;
-git clone https://github.com/torch/distro.git ~/torch --recursive
-&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/torch; bash install-deps;
+git clone https://github.com/torch/distro.git ~/torch &lt;span class=&quot;nt&quot;&gt;--recursive&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/torch&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; bash install-deps&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 ./install.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;将PATH生效后，就可以正常通过th启动Torch7了，也可以通过luarocks安装包。
 Lua可以通过luarocks安装包。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;luarocks install image
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;luarocks &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;image
 luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Fri, 13 Oct 2017 19:18:00 +0800</pubDate>
@@ -320,7 +391,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
   &lt;li&gt;特性：面向对象、函数式编程、静态类型、扩展性、并发性。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;基本语法&lt;/h3&gt;
+&lt;h3 id=&quot;基本语法&quot;&gt;基本语法&lt;/h3&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//Run the interpreter 
 //sbt console 
@@ -478,16 +549,16 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
     
       <item>
         <title>CS231n: Neural Nets</title>
-        <description>&lt;h2 id=&quot;neural-networks&quot;&gt;神经网络 Neural Networks&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;神经网络-neural-networks&quot;&gt;神经网络 Neural Networks&lt;/h2&gt;
 
 &lt;p&gt;神经网络算法的计算公式是&lt;script type=&quot;math/tex&quot;&gt;s=W_2 max(0, W_1 x)&lt;/script&gt;。&lt;script type=&quot;math/tex&quot;&gt;W_1&lt;/script&gt;可以将图像转化为一个相比分类个数来说高维一些的特征过渡向量。比如对于CIFAR-10中，该矩阵大小为&lt;script type=&quot;math/tex&quot;&gt;[100\times 3072]&lt;/script&gt;。函数&lt;script type=&quot;math/tex&quot;&gt;max(0, ~)&lt;/script&gt;为非线性，会作用到每个元素，这个非线性函数可以更换。第二个矩阵&lt;script type=&quot;math/tex&quot;&gt;W_2&lt;/script&gt;则是&lt;script type=&quot;math/tex&quot;&gt;[10\times100]%&lt;/script&gt;，可以得到最终的10个分类评分。两个参数矩阵可以通过随机梯度下降来学习（梯度通过反向传播的链式法则求导计算），而神经网络的关键改变在于非线性函数的引入。最终，一个三层的神经网络可以写成&lt;script type=&quot;math/tex&quot;&gt;s=W_3 max(0,W_2 max(0,W_1 x))&lt;/script&gt;，其中包括三个权重矩阵需要学习，而中间隐层的尺寸是网络而超参数。&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;单个神经元&lt;/h3&gt;
+&lt;h3 id=&quot;单个神经元&quot;&gt;单个神经元&lt;/h3&gt;
 
 &lt;p&gt;生物学中的神经元通过树突获得输入信号，然后沿着他唯一的轴突产生输出信号。从仿生的方向考虑，单个神经元的计算模式为基于其他神经元输入的突触强度(&lt;script type=&quot;math/tex&quot;&gt;w_i&lt;/script&gt;)，与其他神经元的树突进行乘法交互。突触的强度可以控制一个神经元对于另一个神经元的影响强度，使其兴奋或者抑制。各输入信号在胞体中进行叠加，若高于某阈值则会激活神经元，向轴突输出一个峰值信号。神经元的激活率建模为激活函数，它常常选择使用sigmoid函数，它将输入信号值压缩到0-1之间。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#&quot;&gt;
-    &lt;img class=&quot;img-responsive&quot; src=&quot;&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 04 Oct 2016 10:36:00 +0800</pubDate>
@@ -503,11 +574,11 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
     
       <item>
         <title>CS231n: Back Propagation</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;反向传播&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;反向传播&quot;&gt;反向传播&lt;/h2&gt;
 
 &lt;p&gt;反向传播是用来计算给定函数&lt;script type=&quot;math/tex&quot;&gt;f(x)&lt;/script&gt;关于&lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;的梯度&lt;script type=&quot;math/tex&quot;&gt;\bigtriangledown f(x)&lt;/script&gt;，根据梯度可以更快地进行参数更新。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;简单表达式&lt;/h2&gt;
+&lt;h2 id=&quot;简单表达式&quot;&gt;简单表达式&lt;/h2&gt;
 
 &lt;p&gt;函数变量在某个点周围的极小区域内变化，导数和偏导数就是沿着某个方向的变化率，而梯度则是偏导数的向量：&lt;/p&gt;
 
@@ -515,7 +586,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\bigtriangledown f(x, y)=[\frac{\partial f}{x}, \frac{\partial f}{y}]&lt;/script&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;链式法则&lt;/h2&gt;
+&lt;h2 id=&quot;链式法则&quot;&gt;链式法则&lt;/h2&gt;
 &lt;p&gt;链式法则就是我们高数里学过的，复合函数求导时，导数等于各个复合函数梯度表达式（导数）的乘积。在实际代码实现时，只是单纯将两个梯度数值相乘：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 设置输入值&lt;/span&gt;
@@ -538,7 +609,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;a href=&quot;#&quot;&gt;
     &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section-3&quot;&gt;反向传播的意义&lt;/h3&gt;
+&lt;h3 id=&quot;反向传播的意义&quot;&gt;反向传播的意义&lt;/h3&gt;
 &lt;p&gt;反向传播可以看做门单元之间通过梯度信号进行通信，让它们的输入沿着梯度方向变化，局部计算后可以提升整个网络的输出值。实际上，无论是乘法、加法还是MAX都可以看做是门。初此之外还有以下四种门：&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;f(x)=\frac{1}{x} \to \frac{df}{dx}=-\frac{1}{x^2}&lt;/script&gt;
@@ -620,7 +691,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;中间有大量的中间变量需要缓存，在不同分支的梯度计算后，如果同一变量在前向传播中出现多次，就要通过微积分中的多元链式法则进行累加。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-4&quot;&gt;回传流中的模式&lt;/h3&gt;
+&lt;h3 id=&quot;回传流中的模式&quot;&gt;回传流中的模式&lt;/h3&gt;
 &lt;p&gt;观察一个包括加法乘法流的例子：
 &lt;a href=&quot;#&quot;&gt;
     &lt;img class=&quot;img-responsive&quot; src=&quot;/img/post-backprop3.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -632,7 +703,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
   &lt;li&gt;乘法门：它的局部梯度就是输入值，但是是相互交换之后的，然后根据链式法则乘以输出值的梯度。但是如果一个输入非常大，一个非常小，那么交换后获得的梯度将会跟输入数据的大小密切相关。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;section-5&quot;&gt;矩阵操作&lt;/h3&gt;
+&lt;h3 id=&quot;矩阵操作&quot;&gt;矩阵操作&lt;/h3&gt;
 &lt;p&gt;当真正进行计算时，大多是矩阵和向量操作。矩阵相乘时有很多好的操作习惯，比如矩阵转置，比如维度分析：&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# 前向传播&lt;/span&gt;
@@ -660,13 +731,13 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
     
       <item>
         <title>CS231n: Optimization</title>
-        <description>&lt;h2 id=&quot;optimization&quot;&gt;最优化 Optimization&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;最优化-optimization&quot;&gt;最优化 Optimization&lt;/h2&gt;
 
 &lt;p&gt;最优化就是通过计算权重&lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;来最小化损失函数。如果损失函数是SVM损失，那么这个凸函数是可以用凸优化的方法进行的。但是当损失函数扩展成为神经网络时，那么目标函数就不是凸函数了，而且损失函数中存在不可导点(kinks)，使得这些点不可微，在这些点也没有梯度的定义。但是次梯度(subgradient)依然可以使用。&lt;/p&gt;
 
 &lt;p&gt;我们从最基本的方案开始逐步过渡到梯度的方法。&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;&lt;strong&gt;随机搜索&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;随机搜索&quot;&gt;&lt;strong&gt;随机搜索&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;p&gt;大量随机生成权重矩阵，然后比较它们的损失值，取最小的权重作为我们要找的权重去跑测试集。&lt;/p&gt;
 
@@ -694,7 +765,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;当随机猜测时，正确概率是10%，这里用多次筛选得到随机矩阵提升了一点。如果我们能够设计一个迭代算法，使得每次迭代后的损失值都减少一点，那么就能找到更好的&lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;&lt;strong&gt;随机本地搜索&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;随机本地搜索&quot;&gt;&lt;strong&gt;随机本地搜索&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;p&gt;设计一个迭代算法，每一次都随机尝试几个方向，如果方向是向下（能让损失值小一点），那就向该方向走一步。依然从随机的&lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt;开始，每次给予一个随机扰动&lt;script type=&quot;math/tex&quot;&gt;\delta W&lt;/script&gt;，如果扰动后损失值更小了，就更新权重矩阵。&lt;/p&gt;
 
@@ -711,11 +782,11 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;用同样的方法，相比上述方法准确率更高（20%），但是因为迭代过程是随机的，所以训练时间和效果都不稳定。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;&lt;strong&gt;跟随梯度&lt;/strong&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;跟随梯度&quot;&gt;&lt;strong&gt;跟随梯度&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;p&gt;这里的迭代算法保证了每次都是走向局部最优的低处，这个方向就是损失函数的梯度(gradient)。&lt;strong&gt;梯度是各个维度的斜率组成的向量(导数derivatives)&lt;/strong&gt;。当函数有多个参数时，梯度是每个维度上偏导数所形成的向量。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;梯度计算&lt;/h2&gt;
+&lt;h2 id=&quot;梯度计算&quot;&gt;梯度计算&lt;/h2&gt;
 
 &lt;p&gt;计算梯度的方法有两种：数值梯度法（近似），分析梯度法（精确，需要微分）。&lt;/p&gt;
 
@@ -791,7 +862,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\bigtriangledown_{w_{y_i}} L_i=\mathbb{I}(w_j^T x_i-w_{y_i}^T x_i+\Delta&gt;0)x_i&lt;/script&gt;
 
-&lt;h3 id=&quot;section-4&quot;&gt;梯度下降&lt;/h3&gt;
+&lt;h3 id=&quot;梯度下降&quot;&gt;梯度下降&lt;/h3&gt;
 
 &lt;p&gt;得到损失函数的梯度后就可以进行梯度下降的过程。普通的梯度下降法只适用于小数据量，在大数据量下，计算整个数据集来获取一个参数的代价过高，常用方法是计算训练集中的小批量(batches)数据。因为训练集中的数据大多相关，通过小批量数据梯度计算可以实现快速收敛，以此进行更频繁地更新。&lt;/p&gt;
 
@@ -838,12 +909,12 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;前几章铺垫的部分讲述了&lt;strong&gt;Python与numpy库&lt;/strong&gt;的基本用法，并简单阐述了&lt;strong&gt;图像分类&lt;/strong&gt;这一概念的目标与简单实现方法（KNN）。笔记我将直接从线性分类器开始写起。&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;线性分类&lt;/h3&gt;
+&lt;h3 id=&quot;线性分类&quot;&gt;线性分类&lt;/h3&gt;
 &lt;p&gt;图像分类是从已有的固定标签中选择一个合适的标签给一张新的图像。k-Nearest Neighbor分类器通过比较新图像&lt;script type=&quot;math/tex&quot;&gt;I_{test}&lt;/script&gt;与所有训练集&lt;script type=&quot;math/tex&quot;&gt;{I_{train}}&lt;/script&gt;的距离来判断它的标签。但是k-NN需要将所有的训练数据存储用于比较，存储与计算的复杂度高。&lt;/p&gt;
 
 &lt;p&gt;我们需要实现一种新的方法来解决图像分类问题。它包括两个部分：一个是&lt;strong&gt;评分函数(score function)&lt;/strong&gt;，是从原始图像到类标的映射；另一个是&lt;strong&gt;损失函数(loss function)&lt;/strong&gt;，用来量化预测结果与真实结果的一致性。于是该方法可以被转化为一个&lt;strong&gt;最优化问题&lt;/strong&gt;，通过更新评分函数的参数来最小化损失函数的结果。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;评分函数&lt;/h3&gt;
+&lt;h3 id=&quot;评分函数&quot;&gt;评分函数&lt;/h3&gt;
 &lt;p&gt;评分函数将图像的像素值映射到各个类别的得分，而得分的高低代表了属于该类别的可能性高低。我们假设一个包含很多图像的训练集&lt;script type=&quot;math/tex&quot;&gt;x_i \in R^D&lt;/script&gt;，对应一个分类标签&lt;script type=&quot;math/tex&quot;&gt;y_i&lt;/script&gt;且&lt;script type=&quot;math/tex&quot;&gt;y_i \in 1, ..., K&lt;/script&gt;。这里我们有个&lt;script type=&quot;math/tex&quot;&gt;N&lt;/script&gt;训练样本，图像维度为&lt;script type=&quot;math/tex&quot;&gt;D&lt;/script&gt;，有&lt;script type=&quot;math/tex&quot;&gt;K&lt;/script&gt;种分类标签。在CIFAR-10中，&lt;script type=&quot;math/tex&quot;&gt;N=50000&lt;/script&gt;，&lt;script type=&quot;math/tex&quot;&gt;D=32\times32\times3&lt;/script&gt;，&lt;script type=&quot;math/tex&quot;&gt;K=10&lt;/script&gt;，定义评分函数&lt;script type=&quot;math/tex&quot;&gt;f: R^D\\to R^K&lt;/script&gt;。&lt;/p&gt;
 
 &lt;p&gt;最简单的概率函数就是线性映射，也就是线性分类器的评分函数：&lt;/p&gt;
@@ -865,7 +936,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;strong&gt;数据预处理：&lt;/strong&gt;机器学习中我们常对特征值做normalization，而再图像分类时我们常常对每个特征值减去平均值来中心化数据。上述图像在中心化后将分布在&lt;script type=&quot;math/tex&quot;&gt;[-127,127]&lt;/script&gt;之间，然后再根据某些规则使区间变为&lt;script type=&quot;math/tex&quot;&gt;[-1,1]&lt;/script&gt;。总之，zero mean centering是非常重要的。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;损失函数&lt;/h3&gt;
+&lt;h3 id=&quot;损失函数&quot;&gt;损失函数&lt;/h3&gt;
 &lt;p&gt;损失函数(Loss function)也被称为代价(cost)函数和目标(objective)函数，用来衡量计算的得分(score)与图像真实标签的差异。损失越大，差异越大，评分函数越差。损失函数有很多种，这里学习的是多类支持向量机损失(Multiclass Support Vector Machine Loss)。&lt;/p&gt;
 
 &lt;p&gt;SVM损失是让正确分类始终比错误分类的得分高出一个阈值&lt;script type=&quot;math/tex&quot;&gt;\Delta&lt;/script&gt;。给出第&lt;script type=&quot;math/tex&quot;&gt;i&lt;/script&gt;个数据包括&lt;script type=&quot;math/tex&quot;&gt;x_i, y_i&lt;/script&gt;，评分函数得到第&lt;script type=&quot;math/tex&quot;&gt;j&lt;/script&gt;个类别的评分&lt;script type=&quot;math/tex&quot;&gt;s_j=f(x_i,W)_j&lt;/script&gt;。那么这个数据的损失函数就是：&lt;/p&gt;
@@ -957,7 +1028,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
   &lt;span class=&quot;c&quot;&gt;# evaluate loss over all examples in X without using any for loops&lt;/span&gt;
   &lt;span class=&quot;c&quot;&gt;# left as exercise to reader in the assignment&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3 id=&quot;softmax&quot;&gt;Softmax分类器&lt;/h3&gt;
+&lt;h3 id=&quot;softmax分类器&quot;&gt;Softmax分类器&lt;/h3&gt;
 &lt;p&gt;Softmax分类器可以理解为逻辑回归分类对多类问题的一般化归纳。保持评分函数不变，将评分视为每个分类未归一化的对数概率。折叶损失换为交叉熵损失(cross-entropy loss)，数据集的损失依然表示为损失值和正则化损失之和。交叉熵损失公式如下：&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;L_i=-log(\frac{e^{f_{y_i}}}{\sum_j e^{f_j}})&lt;/script&gt;
@@ -995,7 +1066,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# f becomes [-666, -333, 0]&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 现在OK了，将给出正确结果&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3 id=&quot;svmsoftmax&quot;&gt;对比SVM与Softmax&lt;/h3&gt;
+&lt;h3 id=&quot;对比svm与softmax&quot;&gt;对比SVM与Softmax&lt;/h3&gt;
 &lt;p&gt;SVM给出是否是该分类的判断，而softmax给出了对于不同分类准确率的把握。而可能性分布的集中与离散程度由正则化参数&lt;script type=&quot;math/tex&quot;&gt;\lambda&lt;/script&gt;决定。当正则化参数越大，那么权重W会被惩罚的越多，那么它的权重数值就会更小，而输出的概率分布就会更加均匀离散。&lt;/p&gt;
 
 &lt;p&gt;另外，SVM在超过安全距离后就满足了，W此时就不再变化；而softmax对分数永远不会满意，总是可以对损失值进行最小化。&lt;/p&gt;
@@ -1077,7 +1148,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;面对这样有趣而又富有技术气息的别开生面的开发者集会，我迫不及待地写了application给HackShanghai，并成功的得到了参赛机会还有机票报销。就这样，我踏上了第一次黑客马拉松的旅途。&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;初出茅庐&lt;/h3&gt;
+&lt;h3 id=&quot;初出茅庐&quot;&gt;初出茅庐&lt;/h3&gt;
 &lt;p&gt;HackShanghai 2014由&lt;strong&gt;&lt;u&gt;上海纽约大学&lt;/u&gt;&lt;/strong&gt;举办，迎接我们register的是来自五湖四海的留学生，而来参赛的二百五十名同学也遍布五个大洲的大学，会场每个队伍一张长桌，整个会场被各种知名抑或是创业IT企业包围，可以随时去了解它们的最新技术和企业文化，更可以免费使用到它们所提供的智能硬件或API接口。比赛时间是24个小时，代码要求被提交到Gitcafe赞助商的托管网站上，在demo展示后，会有10个组被选中进入上台评比的阶段，再从它们当中选出最后的前三名，奖励非常丰厚。&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;#&quot;&gt;
@@ -1097,7 +1168,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;原因在于，我们做的是系统，而黑客马拉松更看重的是别出心裁的创意和酷炫的展示，代码要通过精彩的展示秀出来，而我们冗长而繁琐的系统很难给人有趣的感觉从而落败。尽管如此，我们还是因为做得个人体验好而被一位记者看中，我们的作品因此登上了上海日报、腾讯新闻、搜狐科技等媒体网站和报纸。而这第一次参加比赛见识到了来自各地高手的创意和代码能力，认识了一群好朋友，并清醒地懂得了在短时间内做出一个&lt;strong&gt;&lt;u&gt;可用、有趣又吸人眼球的产品&lt;/u&gt;&lt;/strong&gt;有多么重要。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;转战机器人马拉松&lt;/h3&gt;
+&lt;h3 id=&quot;转战机器人马拉松&quot;&gt;转战机器人马拉松&lt;/h3&gt;
 &lt;p&gt;第二次黑客马拉松，是一场别开生面的机器人马拉松，全球知名的人型机器人公司ALDEBARAN来到中国举办的第一场黑客松，而机器人黑客松已经成功在欧洲和美国举办了许多起。这种由企业举办的黑客马拉松往往有个主题或者题目，比如“饿了吗黑客马拉松”是处理刷单问题的，大众黑客马拉松是做智能车载应用的等，而这次机器人马拉松则必须使用机器人Nao来实现相关想法！&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -1117,7 +1188,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;/a&gt;
 &lt;span class=&quot;caption text-muted&quot;&gt;Nao and me!&lt;/span&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;unique-hack-day&quot;&gt;更大的舞台——华科Unique Hack Day&lt;/h3&gt;
+&lt;h3 id=&quot;更大的舞台华科unique-hack-day&quot;&gt;更大的舞台——华科Unique Hack Day&lt;/h3&gt;
 &lt;p&gt;广交会结束后，我又自己报名参加了&lt;strong&gt;&lt;u&gt;华中科技大学&lt;/u&gt;&lt;/strong&gt;的Unique Hack Day，这次的参与者与我第一次参加HackShanghai的选手有着很大的重叠，并有来自清华北大上交台大等名校高手。我作为已经参加过两届的黑客松选手，从很早就开始了筹划，我和同校的程序高手王钦和美女设计师一起，抱哈工大王潇雨的大腿在提前一个周就开始了讨论，最后我们决定做一个多人在线体感音乐游戏命名为&lt;strong&gt;&lt;u&gt;SwordDancer&lt;/u&gt;&lt;/strong&gt;，提前看好自己需要用到的编程技术，并开始学习。&lt;/p&gt;
 
 &lt;p&gt;到达武汉后，迎接我们的不但是闷热的天气，还有好吃的热干面，吃饱喝足后比赛开始。我们所构想的游戏是这样的，两名玩家在自己的电脑前面玩同一个游戏，两个人通过技能来使对方的血量降低，就像拳皇一样，而技能的释放则类似于《节奏大师》的模式，根据音乐和游戏中的提示做出相应的手势即可放出相应的技能。玩家体感自然是用我熟悉的leap motion，前端的工作量非常大由王钦完成，而经验丰富的王潇雨则负责游戏引擎也就是后台，美女设计师负责提供图片切片设计和手势动作设计，力求让游戏的界面和操作都引人入胜。&lt;/p&gt;
@@ -1126,7 +1197,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;这次马拉松给我的经验是，在生活中就要积累idea，很多想法记录下来，综合一下也许就可以借助马拉松的机会和队友一起完成自己的想法了。&lt;/p&gt;
 
-&lt;h3 id=&quot;hack-ntu&quot;&gt;国际黑客松——Hack NTU&lt;/h3&gt;
+&lt;h3 id=&quot;国际黑客松hack-ntu&quot;&gt;国际黑客松——Hack NTU&lt;/h3&gt;
 &lt;p&gt;由于获得了Unique Hack Day的前三名，我们获得了去&lt;strong&gt;&lt;u&gt;台湾大学&lt;/u&gt;&lt;/strong&gt;参加黑客松的机票报销，于是我们3个开发者又加上一个朋友Roy一起前往台湾参加比赛。&lt;/p&gt;
 
 &lt;p&gt;Hack NTU是我所见过最大的黑客马拉松，有来自世界各地的1000人参加，期间还有台北市市长出席参观，政府可谓非常重视。&lt;/p&gt;
@@ -1145,7 +1216,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;这次黑客松更像是世界IT文化的交流，不同地区不同肤色的人们用代码书写着不同的未来，智慧城市的主题也更显得熠熠生辉了。&lt;/p&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;本科的结束——编程之美全国总决赛&lt;/h3&gt;
+&lt;h3 id=&quot;本科的结束编程之美全国总决赛&quot;&gt;本科的结束——编程之美全国总决赛&lt;/h3&gt;
 &lt;p&gt;到了即将毕业的时候，在这个炎热的五月，我迎来了本科阶段最后一场比赛——&lt;strong&gt;&lt;u&gt;编程之美全国总决赛&lt;/u&gt;&lt;/strong&gt;，巧合的是又在上海，正是我第一场黑客松比赛的地方。&lt;/p&gt;
 
 &lt;p&gt;这次比赛由微软与IEEE联合举办，比赛地点在微软上海紫竹园区，比赛时间是24小时，不算是单纯的黑客马拉松，却是黑客马拉松的性质。这次我带领两个大神学弟，并与山东大学的美女设计师殷锟组队。随着题目的发布，我们选择了“智能相框”的题目：通过一段语音在图片库中找到想要的图片，属于内容较为限定形式比较开放的半开放题目。&lt;/p&gt;
@@ -1229,30 +1300,6 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
         
       </item>
     
-      <item>
-        <title>3D Earth to Show statistics</title>
-        <description>&lt;h2 class=&quot;section-heading&quot;&gt;3D 地球&lt;/h2&gt;
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前段时间去上海参加hackathon的时候还听周神和策神跟我说数据可视化，是大数据时代一个热点。这次我在查询高德地图API时发现了一张“&lt;a href=&quot;http://lbs.amap.com/gps/&quot;&gt;全球定位热力图&lt;/a&gt;”，十分酷炫，是根据各地区的地图api访问次数而生成的地图图像！看了下其引用库，是最基础的JS下的3D库THREE.js，而对于global的数据分布则可以直接使用WebGL Global，开源的搭建好的地球视图，只需要提供json格式的经纬度数据，就可以描绘出美轮美奂的定制版数字地球啦！&lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;另外，3D的编程现在不仅局限于openGL了，前段时间有使用过vpython，也是非常好的3D工具，这里也粗略的学习了一下一个3D场景的基本元素。其中包括场景、渲染器、相机、物体、光源，在编程中会慢慢体会到这些元素的实际设定。&lt;/p&gt;
-
-&lt;h2 class=&quot;section-heading&quot;&gt;Demo&lt;/h2&gt;
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;闲话不多说了，看下面的demo，全球人口信息在3年中的变化。&lt;/p&gt;
-
-&lt;iframe frameborder=&quot;0&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; border=&quot;0&quot; scrolling=&quot;no&quot; height=&quot;600px&quot; width=&quot;100%&quot; src=&quot;https://globe.chromeexperiments.com/&quot;&gt;&lt;/iframe&gt;
-
-</description>
-        <pubDate>Sun, 21 Dec 2014 05:23:00 +0800</pubDate>
-        <link>http://localhost:4000/visualization/2014/12/21/3D-Earth-to-show-statistics/</link>
-        <guid isPermaLink="true">http://localhost:4000/visualization/2014/12/21/3D-Earth-to-show-statistics/</guid>
-        
-        <category>Robot</category>
-        
-        
-        <category>Visualization</category>
-        
-      </item>
-    
   </channel>
 </rss>
 
@@ -1314,7 +1361,7 @@ luarocks list&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2018</p>
             </div>
         </div>
     </div>

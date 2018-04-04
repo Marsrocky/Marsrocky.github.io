@@ -175,7 +175,7 @@
   <li>Lua没有提供强大的库，不适合作为开发独立应用程序的语言。</li>
 </ul>
 
-<h4 id="lua-1">lua的安装</h4>
+<h4 id="lua的安装">lua的安装</h4>
 
 <figure class="highlight"><pre><code class="language-linux" data-lang="linux">curl -R -O http://www.lua.org/ftp/lua-5.3.0.tar.gz
 tar zxf lua-5.3.0.tar.gz
@@ -185,14 +185,14 @@ make install</code></pre></figure>
 
 <p>Lua也有交互式编程模式，可以通过命令lua直接启动，也可以写好hello.lua文件然后执行。先来学习一波基本语法和特性！</p>
 
-<h4 id="lua-">Lua 基本语法</h4>
-<h5 id="section">[注释]</h5>
+<h4 id="lua-基本语法">Lua 基本语法</h4>
+<h5 id="注释">[注释]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">-- 两个减号为注释</span>
 <span class="c1">-- 书写时通过指定lua解释器来运行脚本</span>
 <span class="o">#</span><span class="err">!</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="kd">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">lua</span></code></pre></figure>
 
-<h5 id="section-1">[标示符]</h5>
+<h5 id="标示符">[标示符]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">-- 用于定义一个变量，函数获取其他用户定义的项。标示符以一个字母 A 到 Z 或 a 到 z 或下划线 _ 开头后加上0个或多个字母，下划线，数字（0到9）。最好不要使用下划线加大写字母的标示符，因为Lua的保留字也是这样的。</span>
 <span class="c1">-- 变量默认为全局变量</span>
@@ -203,7 +203,7 @@ make install</code></pre></figure>
 <span class="c1">-- 局部变量</span>
 <span class="kd">local</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span></code></pre></figure>
 
-<h5 id="section-2">[数据类型]</h5>
+<h5 id="数据类型">[数据类型]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">--nil: 无效值</span>
 <span class="c1">--boolean: false/true</span>
@@ -214,7 +214,7 @@ make install</code></pre></figure>
 <span class="c1">--thread: 表示执行的独立线路</span>
 <span class="c1">--table: 关联数组</span></code></pre></figure>
 
-<h5 id="section-3">[赋值]</h5>
+<h5 id="赋值">[赋值]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">--同时对多个赋值</span>
 <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span><span class="n">c</span>
@@ -222,14 +222,14 @@ make install</code></pre></figure>
 <span class="n">site</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">site</span><span class="p">[</span><span class="s2">"key"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"marsrock.net"</span></code></pre></figure>
 
-<h5 id="section-4">[循环]</h5>
+<h5 id="循环">[循环]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">--循环会在开始前一次性求值，之后不在求值</span>
 <span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span> <span class="k">do</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="k">end</span></code></pre></figure>
 
-<h5 id="section-5">[函数]</h5>
+<h5 id="函数">[函数]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="cm">--[[ 函数返回两个值的最大值 --]]</span>
 <span class="k">function</span> <span class="nf">max</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">)</span>
@@ -245,7 +245,7 @@ make install</code></pre></figure>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"两值比较最大值为 "</span><span class="p">,</span><span class="n">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"两值比较最大值为 "</span><span class="p">,</span><span class="n">max</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span></code></pre></figure>
 
-<h5 id="section-6">[字符串]</h5>
+<h5 id="字符串">[字符串]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">--string functions</span>
 <span class="n">a</span> <span class="o">=</span> <span class="s2">"lua"</span>
@@ -257,7 +257,7 @@ make install</code></pre></figure>
 <span class="nb">string.len</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"abc"</span><span class="o">..</span><span class="s2">"def"</span><span class="p">)</span> <span class="c1">--连接字符串</span></code></pre></figure>
 
-<h5 id="section-7">[数组]</h5>
+<h5 id="数组">[数组]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="n">array</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Lua"</span><span class="p">,</span> <span class="s2">"Tutorial"</span><span class="p">}</span>
 
@@ -265,7 +265,7 @@ make install</code></pre></figure>
    <span class="nb">print</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 <span class="k">end</span></code></pre></figure>
 
-<h5 id="section-8">[面向对象]</h5>
+<h5 id="面向对象">[面向对象]</h5>
 
 <figure class="highlight"><pre><code class="language-lua" data-lang="lua"><span class="c1">-- Meta class</span>
 <span class="n">Shape</span> <span class="o">=</span> <span class="p">{</span><span class="n">area</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}</span>
@@ -294,17 +294,17 @@ make install</code></pre></figure>
   <li>Facebook的AI团队发布了Pytorch，针对GPU加速的DNN编程。</li>
 </ul>
 
-<h4 id="section-9">安装</h4>
+<h4 id="安装">安装</h4>
 
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># in a terminal, run the commands WITHOUT sudo</span>
-git clone https://github.com/torch/distro.git ~/torch --recursive
-<span class="nb">cd</span> ~/torch; bash install-deps;
+git clone https://github.com/torch/distro.git ~/torch <span class="nt">--recursive</span>
+<span class="nb">cd</span> ~/torch<span class="p">;</span> bash install-deps<span class="p">;</span>
 ./install.sh</code></pre></figure>
 
 <p>将PATH生效后，就可以正常通过th启动Torch7了，也可以通过luarocks安装包。
 Lua可以通过luarocks安装包。</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">luarocks install image
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">luarocks <span class="nb">install </span>image
 luarocks list</code></pre></figure>
 
 
@@ -315,6 +315,10 @@ luarocks list</code></pre></figure>
                         <a href="http://localhost:4000//programming/2016/10/12/A-Scala-Primer/" data-toggle="tooltip" data-placement="top" title="A Scala Primer">&larr; Previous Post</a> 
                     </li>
                      
+                    
+                    <li class="next">
+                        <a href="http://localhost:4000//transfer%20learning/2018/04/04/Transfer-Component-Analysis/" data-toggle="tooltip" data-placement="top" title="Transfer Component Analysis">Next Post &rarr;</a>
+                    </li>
                      
                 </ul>
             <hr>
@@ -396,7 +400,7 @@ luarocks list</code></pre></figure>
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2018</p>
             </div>
         </div>
     </div>

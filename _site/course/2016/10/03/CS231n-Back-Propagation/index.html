@@ -167,11 +167,11 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h2 id="section">反向传播</h2>
+				<h2 id="反向传播">反向传播</h2>
 
 <p>反向传播是用来计算给定函数<script type="math/tex">f(x)</script>关于<script type="math/tex">x</script>的梯度<script type="math/tex">\bigtriangledown f(x)</script>，根据梯度可以更快地进行参数更新。</p>
 
-<h2 id="section-1">简单表达式</h2>
+<h2 id="简单表达式">简单表达式</h2>
 
 <p>函数变量在某个点周围的极小区域内变化，导数和偏导数就是沿着某个方向的变化率，而梯度则是偏导数的向量：</p>
 
@@ -179,7 +179,7 @@
 
 <script type="math/tex; mode=display">\bigtriangledown f(x, y)=[\frac{\partial f}{x}, \frac{\partial f}{y}]</script>
 
-<h2 id="section-2">链式法则</h2>
+<h2 id="链式法则">链式法则</h2>
 <p>链式法则就是我们高数里学过的，复合函数求导时，导数等于各个复合函数梯度表达式（导数）的乘积。在实际代码实现时，只是单纯将两个梯度数值相乘：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># 设置输入值</span>
@@ -202,7 +202,7 @@
 <p><a href="#">
     <img class="img-responsive" src="/img/post-backprop.jpg" alt="" width="100%" /></a></p>
 
-<h3 id="section-3">反向传播的意义</h3>
+<h3 id="反向传播的意义">反向传播的意义</h3>
 <p>反向传播可以看做门单元之间通过梯度信号进行通信，让它们的输入沿着梯度方向变化，局部计算后可以提升整个网络的输出值。实际上，无论是乘法、加法还是MAX都可以看做是门。初此之外还有以下四种门：</p>
 
 <script type="math/tex; mode=display">f(x)=\frac{1}{x} \to \frac{df}{dx}=-\frac{1}{x^2}</script>
@@ -284,7 +284,7 @@
 
 <p>中间有大量的中间变量需要缓存，在不同分支的梯度计算后，如果同一变量在前向传播中出现多次，就要通过微积分中的多元链式法则进行累加。</p>
 
-<h3 id="section-4">回传流中的模式</h3>
+<h3 id="回传流中的模式">回传流中的模式</h3>
 <p>观察一个包括加法乘法流的例子：
 <a href="#">
     <img class="img-responsive" src="/img/post-backprop3.jpg" alt="" width="100%" /></a></p>
@@ -296,7 +296,7 @@
   <li>乘法门：它的局部梯度就是输入值，但是是相互交换之后的，然后根据链式法则乘以输出值的梯度。但是如果一个输入非常大，一个非常小，那么交换后获得的梯度将会跟输入数据的大小密切相关。</li>
 </ul>
 
-<h3 id="section-5">矩阵操作</h3>
+<h3 id="矩阵操作">矩阵操作</h3>
 <p>当真正进行计算时，大多是矩阵和向量操作。矩阵相乘时有很多好的操作习惯，比如矩阵转置，比如维度分析：</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># 前向传播</span>
@@ -404,7 +404,7 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2018</p>
             </div>
         </div>
     </div>

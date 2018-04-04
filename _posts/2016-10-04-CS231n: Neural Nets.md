@@ -21,7 +21,6 @@ category:   Course
 
 {% endhighlight %}
 
-
 <a href="#">
-    <img class="img-responsive" src="" alt="" width="100%"></a>
+<img class="img-responsive" src="{{ site.baseurl }}/img/post-backprop.jpg" alt="" width="100%"></a>
 

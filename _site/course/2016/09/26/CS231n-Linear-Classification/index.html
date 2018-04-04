@@ -174,12 +174,12 @@
 
 <p>前几章铺垫的部分讲述了<strong>Python与numpy库</strong>的基本用法，并简单阐述了<strong>图像分类</strong>这一概念的目标与简单实现方法（KNN）。笔记我将直接从线性分类器开始写起。</p>
 
-<h3 id="section">线性分类</h3>
+<h3 id="线性分类">线性分类</h3>
 <p>图像分类是从已有的固定标签中选择一个合适的标签给一张新的图像。k-Nearest Neighbor分类器通过比较新图像<script type="math/tex">I_{test}</script>与所有训练集<script type="math/tex">{I_{train}}</script>的距离来判断它的标签。但是k-NN需要将所有的训练数据存储用于比较，存储与计算的复杂度高。</p>
 
 <p>我们需要实现一种新的方法来解决图像分类问题。它包括两个部分：一个是<strong>评分函数(score function)</strong>，是从原始图像到类标的映射；另一个是<strong>损失函数(loss function)</strong>，用来量化预测结果与真实结果的一致性。于是该方法可以被转化为一个<strong>最优化问题</strong>，通过更新评分函数的参数来最小化损失函数的结果。</p>
 
-<h3 id="section-1">评分函数</h3>
+<h3 id="评分函数">评分函数</h3>
 <p>评分函数将图像的像素值映射到各个类别的得分，而得分的高低代表了属于该类别的可能性高低。我们假设一个包含很多图像的训练集<script type="math/tex">x_i \in R^D</script>，对应一个分类标签<script type="math/tex">y_i</script>且<script type="math/tex">y_i \in 1, ..., K</script>。这里我们有个<script type="math/tex">N</script>训练样本，图像维度为<script type="math/tex">D</script>，有<script type="math/tex">K</script>种分类标签。在CIFAR-10中，<script type="math/tex">N=50000</script>，<script type="math/tex">D=32\times32\times3</script>，<script type="math/tex">K=10</script>，定义评分函数<script type="math/tex">f: R^D\\to R^K</script>。</p>
 
 <p>最简单的概率函数就是线性映射，也就是线性分类器的评分函数：</p>
@@ -201,7 +201,7 @@
 
 <p><strong>数据预处理：</strong>机器学习中我们常对特征值做normalization，而再图像分类时我们常常对每个特征值减去平均值来中心化数据。上述图像在中心化后将分布在<script type="math/tex">[-127,127]</script>之间，然后再根据某些规则使区间变为<script type="math/tex">[-1,1]</script>。总之，zero mean centering是非常重要的。</p>
 
-<h3 id="section-2">损失函数</h3>
+<h3 id="损失函数">损失函数</h3>
 <p>损失函数(Loss function)也被称为代价(cost)函数和目标(objective)函数，用来衡量计算的得分(score)与图像真实标签的差异。损失越大，差异越大，评分函数越差。损失函数有很多种，这里学习的是多类支持向量机损失(Multiclass Support Vector Machine Loss)。</p>
 
 <p>SVM损失是让正确分类始终比错误分类的得分高出一个阈值<script type="math/tex">\Delta</script>。给出第<script type="math/tex">i</script>个数据包括<script type="math/tex">x_i, y_i</script>，评分函数得到第<script type="math/tex">j</script>个类别的评分<script type="math/tex">s_j=f(x_i,W)_j</script>。那么这个数据的损失函数就是：</p>
@@ -293,7 +293,7 @@
   <span class="c"># evaluate loss over all examples in X without using any for loops</span>
   <span class="c"># left as exercise to reader in the assignment</span></code></pre></figure>
 
-<h3 id="softmax">Softmax分类器</h3>
+<h3 id="softmax分类器">Softmax分类器</h3>
 <p>Softmax分类器可以理解为逻辑回归分类对多类问题的一般化归纳。保持评分函数不变，将评分视为每个分类未归一化的对数概率。折叶损失换为交叉熵损失(cross-entropy loss)，数据集的损失依然表示为损失值和正则化损失之和。交叉熵损失公式如下：</p>
 
 <script type="math/tex; mode=display">L_i=-log(\frac{e^{f_{y_i}}}{\sum_j e^{f_j}})</script>
@@ -331,7 +331,7 @@
 <span class="n">f</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c"># f becomes [-666, -333, 0]</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f</span><span class="p">))</span> <span class="c"># 现在OK了，将给出正确结果</span></code></pre></figure>
 
-<h3 id="svmsoftmax">对比SVM与Softmax</h3>
+<h3 id="对比svm与softmax">对比SVM与Softmax</h3>
 <p>SVM给出是否是该分类的判断，而softmax给出了对于不同分类准确率的把握。而可能性分布的集中与离散程度由正则化参数<script type="math/tex">\lambda</script>决定。当正则化参数越大，那么权重W会被惩罚的越多，那么它的权重数值就会更小，而输出的概率分布就会更加均匀离散。</p>
 
 <p>另外，SVM在超过安全距离后就满足了，W此时就不再变化；而softmax对分数永远不会满意，总是可以对损失值进行最小化。</p>
@@ -434,7 +434,7 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2018</p>
             </div>
         </div>
     </div>

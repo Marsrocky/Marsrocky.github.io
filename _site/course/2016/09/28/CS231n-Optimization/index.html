@@ -167,13 +167,13 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<h2 id="optimization">最优化 Optimization</h2>
+				<h2 id="最优化-optimization">最优化 Optimization</h2>
 
 <p>最优化就是通过计算权重<script type="math/tex">W</script>来最小化损失函数。如果损失函数是SVM损失，那么这个凸函数是可以用凸优化的方法进行的。但是当损失函数扩展成为神经网络时，那么目标函数就不是凸函数了，而且损失函数中存在不可导点(kinks)，使得这些点不可微，在这些点也没有梯度的定义。但是次梯度(subgradient)依然可以使用。</p>
 
 <p>我们从最基本的方案开始逐步过渡到梯度的方法。</p>
 
-<h3 id="section"><strong>随机搜索</strong></h3>
+<h3 id="随机搜索"><strong>随机搜索</strong></h3>
 
 <p>大量随机生成权重矩阵，然后比较它们的损失值，取最小的权重作为我们要找的权重去跑测试集。</p>
 
@@ -201,7 +201,7 @@
 
 <p>当随机猜测时，正确概率是10%，这里用多次筛选得到随机矩阵提升了一点。如果我们能够设计一个迭代算法，使得每次迭代后的损失值都减少一点，那么就能找到更好的<script type="math/tex">W</script>。</p>
 
-<h3 id="section-1"><strong>随机本地搜索</strong></h3>
+<h3 id="随机本地搜索"><strong>随机本地搜索</strong></h3>
 
 <p>设计一个迭代算法，每一次都随机尝试几个方向，如果方向是向下（能让损失值小一点），那就向该方向走一步。依然从随机的<script type="math/tex">W</script>开始，每次给予一个随机扰动<script type="math/tex">\delta W</script>，如果扰动后损失值更小了，就更新权重矩阵。</p>
 
@@ -218,11 +218,11 @@
 
 <p>用同样的方法，相比上述方法准确率更高（20%），但是因为迭代过程是随机的，所以训练时间和效果都不稳定。</p>
 
-<h3 id="section-2"><strong>跟随梯度</strong></h3>
+<h3 id="跟随梯度"><strong>跟随梯度</strong></h3>
 
 <p>这里的迭代算法保证了每次都是走向局部最优的低处，这个方向就是损失函数的梯度(gradient)。<strong>梯度是各个维度的斜率组成的向量(导数derivatives)</strong>。当函数有多个参数时，梯度是每个维度上偏导数所形成的向量。</p>
 
-<h2 id="section-3">梯度计算</h2>
+<h2 id="梯度计算">梯度计算</h2>
 
 <p>计算梯度的方法有两种：数值梯度法（近似），分析梯度法（精确，需要微分）。</p>
 
@@ -298,7 +298,7 @@
 
 <script type="math/tex; mode=display">\bigtriangledown_{w_{y_i}} L_i=\mathbb{I}(w_j^T x_i-w_{y_i}^T x_i+\Delta>0)x_i</script>
 
-<h3 id="section-4">梯度下降</h3>
+<h3 id="梯度下降">梯度下降</h3>
 
 <p>得到损失函数的梯度后就可以进行梯度下降的过程。普通的梯度下降法只适用于小数据量，在大数据量下，计算整个数据集来获取一个参数的代价过高，常用方法是计算训练集中的小批量(batches)数据。因为训练集中的数据大多相关，通过小批量数据梯度计算可以实现快速收敛，以此进行更频繁地更新。</p>
 
@@ -418,7 +418,7 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Marsrock 2017</p>
+                <p class="copyright text-muted">Copyright &copy; Marsrock 2018</p>
             </div>
         </div>
     </div>

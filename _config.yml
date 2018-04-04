@@ -17,4 +17,4 @@ rouge: pygments
 permalink: pretty
 paginate: 5
 exclude: ["node_modules"]
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]

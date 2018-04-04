@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Jianfei from Mars">
 
-    <title>Contact - Marsrock</title>
+    <title>Transfer Component Analysis - Marsrock</title>
 
-    <link rel="canonical" href="http://localhost:4000/contact/">
+    <link rel="canonical" href="http://localhost:4000/transfer%20learning/2018/04/04/Transfer-Component-Analysis/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -144,73 +144,118 @@
 </nav>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/f2.jpg')">
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/post-bg-tr.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Contact</h1>
-                    <hr class="small">
-                    <span class="subheading">Say you, say me!</span>
+                <div class="post-heading">
+                    <h1>Transfer Component Analysis</h1>
+                    
+                    <h2 class="subheading">迁移成分分析</h2>
+                    
+                    <span class="meta">Posted by Jianfei on April 4, 2018</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			<p>吐槽、建议或者是鼓励……都可以发邮件给我啦！</p>
-<p>Pro and Cons, it is all acceptable! Send an email to let me know.</p>
-<!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-<!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-<!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-<form name="sentMessage" id="contactForm" novalidate>
-    <div class="row control-group">
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Name</label>
-            <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <div class="row control-group">
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Email Address</label>
-            <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <div class="row control-group">
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Phone Number</label>
-            <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <div class="row control-group">
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-            <label>Message</label>
-            <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <br>
-    <div id="success"></div>
-    <div class="row">
-        <div class="form-group col-xs-12">
-            <button type="submit" class="btn btn-default">Send</button>
-        </div>
-    </div>
-</form>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-		</div>
-	</div>
-</div>
+				<h2 id="引子">引子</h2>
+<p>这篇文章诞生于2009年的IJCAI，也是Transfer Learning中公认的经典之作。迁移学习解决的问题是在数据不足导致Model的泛化能力不足时，应当如何通过unlabeled data提高模型的泛化能力。</p>
 
-<hr>
+<h4 id="具体问题">具体问题</h4>
+<p>TCA想要解决的问题是迁移学习中的一个有趣问题，叫做Domain Adaptation。 说有两个domain，分别是已知类标的Source Domain <script type="math/tex">D_S</script>和未知类标的Target Domain <script type="math/tex">D_T</script>，sample数量分别是<script type="math/tex">n_1</script>和<script type="math/tex">n_2</script>。那么输入数据的边缘分布<script type="math/tex">P(X_S)</script>和<script type="math/tex">Q(X_T)</script>是不同的，那么TCA的目的就是用labelled source data去预测unlabelled target data。</p>
+
+<h4 id="基本假设">基本假设</h4>
+
+<script type="math/tex; mode=display">P \neq Q</script>
+
+<script type="math/tex; mode=display">P(Y_S|X_S)=P(Y_T|X_T)</script>
+
+<h2 id="正文">正文</h2>
+<p>要想在两个domain的数据上使用传统机器学习方法，需要让他们的数据分布满足<script type="math/tex">P=Q</script>。既然他们本身是不相等的，那么是否可以寻找一个nonlinear transformation <script type="math/tex">\phi</script>，使得<script type="math/tex">P'(\phi(X_S))=Q'(\phi(X_T))</script>，映射后的分布就满足大多数分类回归方法的条件了！</p>
+
+<p>那么上述的假设就变成了：</p>
+
+<script type="math/tex; mode=display">P(Y_S|\phi(X_S))=P(Y_T|\phi(X_T))</script>
+
+<p>而如何将两个分布拉到一起呢，这可以等同于一个优化问题，最小化两个分布的距离。用什么距离呢，这里用的是Maximum Mean Discrepancy (MMD)，这里不使用很多其他衡量方法例如KL散度，因为这些方法往往都是参数化的，很难处理。MMD是NIPS2006的一篇文章提出的，文章使用了引理“在选定函数<script type="math/tex">f \in C(X)</script>为continuous bounded functions时，two sample test中的分布<script type="math/tex">p=q</script>与<script type="math/tex">E_p(f(x))=E_q(f(x))</script>是充要条件”提出了使用reproducing kernel Hilbert space (RKHS)中的核函数，并证明了他们的estimate是相当成功的。</p>
+
+<p>那么衡量两个新的domain在kernel下的分布距离度量可以写成：</p>
+
+<script type="math/tex; mode=display">Dist(X'_S,X'_T) = ||  \frac{1}{n_1}\sum_{i=1}^{n_1}\phi(x_{S_i})-\frac{1}{n_2}\sum_{i=1}^{n_2}\phi(x_{T_i})  ||^2_H</script>
+
+<p>在做这个优化问题的时候，之前的工作Maximum Mean Discrepancy Embedding (MMDE)使用了SDP半正定规划去学习一个kernel matrix，但是相当复杂。为了避免显式地计算映射<script type="math/tex">\phi</script>，作者将其转化为一个kernel learning problem，应用kernel trick <script type="math/tex">k(x_i,x_j)=\phi(x_i)' \phi(x_j)</script>，MMD距离可以被写成新的形式：</p>
+
+<script type="math/tex; mode=display">Dist(X'_S,X'_T) = tr(KL)</script>
+
+<p>其中</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+K = \begin{bmatrix} 
+K_{S,S} & K_{S,T} \\
+K_{T,S} & K_{T,T}
+\end{bmatrix} %]]></script>
+
+<p>而L就是用来凑系数的矩阵。</p>
+
+<p>基本思路已经明白了，但是这时便是作者展现数学功底的时候了，只见他三下五除二，先用一个降维后的矩阵<script type="math/tex">W</script>使得</p>
+
+<script type="math/tex; mode=display">K = (KK^{-1/2}\tilde{W})(\tilde{W}^T K^{-1/2}K)=KWW^TK</script>
+
+<p>代入原问题，于是问题转化成了更简单的形式：</p>
+
+<script type="math/tex; mode=display">min_W \quad tr(W^TW)+\mu tr(W^TKLKW)</script>
+
+<script type="math/tex; mode=display">s.t. \quad W^TKHKW=I</script>
+
+<p>这里我就要问了，H是啥玩意？莫名其妙就说是一个center matrix，这个条件就是TCA的第二个目的，在保持各自数据特征的前提下做domain拉近，而保持的散度特征正是<script type="math/tex">AHA^T</script>，这里和PCA有点类似，降维后保持数据特性不变。</p>
+
+<p>下面解这个问题的时候，因为条件非凸，需要先做一个转化，再求它的dual problem就可以解了，解的答案简单明了，W就是求<script type="math/tex">(I+\mu KLK)^{-1}KHK</script>的前<script type="math/tex">m</script>个特征向量，而W的维度正是$(n_1+n_2) \times m$，相当于把所有数据都在分布拉近的同时，降维到了<script type="math/tex">m</script>维度上，后面就可以很简单的使用各种方法进行分类和回归了。</p>
+
+<h2 id="后记">后记</h2>
+
+<p>不得不说，很有趣的问题转化，思路也清楚明白，就是要让我解这个优化问题，那真是老费劲了。科科。</p>
+
+
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="http://localhost:4000//programming/2017/10/13/A-Lua-Primer-plus-Torch/" data-toggle="tooltip" data-placement="top" title="A Lua Primer plus Torch">&larr; Previous Post</a> 
+                    </li>
+                     
+                     
+                </ul>
+            <hr>
+            <!-- 多说评论框 start -->
+            <div class="ds-thread" data-thread-key="/transfer%20learning/2018/04/04/Transfer Component Analysis" data-title="Transfer Component Analysis" data-url="/transfer%20learning/2018/04/04/Transfer-Component-Analysis/"></div>
+            <!-- 多说评论框 end -->
+            <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+            <script type="text/javascript">
+            var duoshuoQuery = {short_name:"marsrocky"};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0] 
+                 || document.getElementsByTagName('body')[0]).appendChild(ds);
+                })();
+            </script>
+            <!-- 多说公共JS代码 end -->
+            </div>
+        </div>
+    </div>
+</article>
 
     <!-- Footer -->
 <footer>
